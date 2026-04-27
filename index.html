@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jibin & Soumya — Wedding 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Josefin+Sans:wght@100;200;300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ivory: #fdf8f0;
+  --cream: #f5ead5;
+  --gold: #c9a060;
+  --gold-light: #e8c98a;
+  --gold-dark: #9a7030;
+  --warm-white: #fffdf7;
+  --text-dark: #2c1e0f;
+  --text-mid: #6b4c2a;
+  --text-light: #a08060;
+  --blush: #f2ddd1;
+  --sage: #9cad97;
+  --card-w: 340px;
+  --card-h: 480px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  background: var(--ivory);
+  color: var(--text-dark);
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ─── NOISE TEXTURE OVERLAY ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* ─── CUSTOM SCROLLBAR ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* ─── SECTION BASE ─── */
+section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ─── SCROLL INDICATOR ─── */
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: scrollPulse 2.5s infinite;
+  z-index: 10;
+}
+.scroll-hint span {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+@keyframes scrollPulse {
+  0%,100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(8px); }
+}
+
+/* ─── FLOATING PARTICLES ─── */
+.particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--gold-light);
+  border-radius: 50%;
+  opacity: 0;
+  animation: floatParticle var(--dur, 8s) var(--delay, 0s) infinite ease-in-out;
+}
+@keyframes floatParticle {
+  0% { opacity: 0; transform: translateY(100vh) translateX(0) scale(0); }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(-20vh) translateX(var(--drift, 50px)) scale(1.5); }
+}
+
+/* ════════════════════════════════════════════
+   SECTION 1: HERO
+════════════════════════════════════════════ */
+#hero {
+  background: linear-gradient(160deg, #fdfaf3 0%, #f8eed8 40%, #fdf6e9 100%);
+  flex-direction: column;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.hero-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,160,96,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-bg-circle:nth-child(1) { width: 800px; height: 800px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.hero-bg-circle:nth-child(2) { width: 500px; height: 500px; top: 20%; right: -100px; }
+.hero-bg-circle:nth-child(3) { width: 400px; height: 400px; bottom: 10%; left: -80px; }
+
+.hero-eyebrow {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 200;
+  letter-spacing: 8px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeUp 1s 0.3s forwards;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 8vw, 100px);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--text-dark);
+  opacity: 0;
+  animation: fadeUp 1.2s 0.6s forwards;
+  position: relative;
+  z-index: 2;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold-dark);
+  display: block;
+}
+.hero-ampersand {
+  font-size: 0.6em;
+  color: var(--gold);
+  vertical-align: middle;
+  margin: 0 10px;
+}
+
+.hero-divider {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 30px auto;
+  width: 300px;
+  opacity: 0;
+  animation: fadeUp 1s 0.9s forwards;
+}
+.hero-divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+.hero-divider-line:last-child { background: linear-gradient(270deg, transparent, var(--gold)); }
+.hero-divider-icon { color: var(--gold); font-size: 18px; }
+
+.hero-sub {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  margin-bottom: 60px;
+  opacity: 0;
+  animation: fadeUp 1s 1.1s forwards;
+}
+
+/* ─── FLIP CARD ─── */
+.flip-card-scene {
+  perspective: 1200px;
+  width: var(--card-w);
+  height: var(--card-h);
+  margin: 0 auto 60px;
+  opacity: 0;
+  animation: fadeUp 1.2s 1.3s forwards;
+  position: relative;
+  z-index: 5;
+}
+
+.flip-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.flip-card.flipped {
+  transform: rotateY(-180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(100,70,30,0.2), 0 10px 30px rgba(100,70,30,0.1);
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front img,
+.flip-card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Overlay for front card */
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(44,30,15,0.7) 0%, rgba(44,30,15,0.1) 60%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+}
+.card-overlay-text {
+  color: white;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.4;
+}
+.card-overlay-date {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--gold-light);
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+/* Flip hint */
+.flip-hint {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  white-space: nowrap;
+  animation: flipHintPulse 3s infinite;
+}
+.flip-hint::before { content: '↻ '; }
+@keyframes flipHintPulse {
+  0%,100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Fallback card face (when no real images) */
+.card-face-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 30px;
+}
+.card-face-front-bg {
+  background: linear-gradient(145deg, #fdf3e3, #f0dbb5, #e8c98a);
+}
+.card-face-back-bg {
+  background: linear-gradient(145deg, #f5e8d0, #ead4a8, #d4a96a);
+}
+.card-face-icon { font-size: 48px; }
+.card-face-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-dark);
+  text-align: center;
+}
+.card-face-names {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: var(--gold-dark);
+  text-align: center;
+  line-height: 1.6;
+}
+.card-face-divider { width: 60px; height: 1px; background: var(--gold); }
+.card-face-date {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--text-light);
+  text-align: center;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ════════════════════════════════════════════
+   SECTION 2: INVITATION
+════════════════════════════════════════════ */
+#invitation {
+  background: linear-gradient(170deg, #f8eed8 0%, var(--ivory) 50%, #fdf3e4 100%);
+  padding: 100px 20px;
+}
+
+.invitation-inner {
+  max-width: 800px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.section-label {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 7px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.invitation-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 300;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+
+.invitation-subtitle {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--text-light);
+  margin-bottom: 60px;
+  text-transform: uppercase;
+}
+
+/* Event cards */
+.event-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+@media (max-width: 600px) {
+  .event-cards { grid-template-columns: 1fr; }
+}
+
+.event-card {
+  background: white;
+  border: 1px solid rgba(201,160,96,0.2);
+  border-radius: 16px;
+  padding: 40px 30px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(100,70,30,0.06);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(100,70,30,0.12);
+}
+.event-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.event-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+.event-type {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.event-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+.event-detail {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  color: var(--text-mid);
+  line-height: 2;
+  letter-spacing: 1px;
+}
+.event-detail strong { color: var(--text-dark); font-weight: 400; }
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 40px;
+  border: 1px solid var(--gold);
+  color: var(--gold-dark);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 50px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+.download-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  z-index: -1;
+  border-radius: 50px;
+}
+.download-btn:hover { color: white; }
+.download-btn:hover::before { transform: scaleX(1); }
+
+/* Decorative corner ornaments */
+.ornament {
+  position: absolute;
+  color: var(--gold-light);
+  font-size: 24px;
+  opacity: 0.4;
+}
+.ornament-tl { top: 20px; left: 20px; }
+.ornament-tr { top: 20px; right: 20px; transform: scaleX(-1); }
+.ornament-bl { bottom: 20px; left: 20px; transform: scaleY(-1); }
+.ornament-br { bottom: 20px; right: 20px; transform: scale(-1); }
+
+/* ════════════════════════════════════════════
+   SECTION 3: COUNTDOWN
+════════════════════════════════════════════ */
+#countdown {
+  background: linear-gradient(160deg, #2c1e0f 0%, #3d2a12 40%, #2c1e0f 100%);
+  color: white;
+  padding: 100px 20px;
+  flex-direction: column;
+  text-align: center;
+  position: relative;
+}
+
+#countdown::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(201,160,96,0.1) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 50%, rgba(201,160,96,0.08) 0%, transparent 60%);
+}
+
+.countdown-eyebrow {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 7px;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.countdown-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 300;
+  color: white;
+  margin-bottom: 50px;
+  position: relative;
+  z-index: 2;
+}
+.countdown-title em { color: var(--gold-light); font-style: italic; }
+
+/* Toggle tabs */
+.countdown-tabs {
+  display: flex;
+  gap: 0;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50px;
+  padding: 5px;
+  margin-bottom: 50px;
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(201,160,96,0.2);
+}
+.tab-btn {
+  padding: 10px 28px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+.tab-btn.active {
+  background: var(--gold);
+  color: white;
+}
+
+/* Countdown digits */
+.countdown-display {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 40px;
+}
+
+.count-unit {
+  text-align: center;
+}
+.count-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(60px, 10vw, 120px);
+  font-weight: 300;
+  color: white;
+  line-height: 1;
+  background: linear-gradient(180deg, white 0%, rgba(255,255,255,0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s ease;
+  min-width: 2ch;
+  display: block;
+}
+.count-label {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+.count-separator {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 6vw, 80px);
+  color: var(--gold);
+  opacity: 0.5;
+  animation: blink 1s infinite;
+  margin-bottom: 20px;
+}
+@keyframes blink {
+  0%,49%{ opacity:0.5; } 50%,100%{ opacity:0.1; }
+}
+
+.countdown-event-label {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.5);
+  position: relative;
+  z-index: 2;
+}
+
+/* ════════════════════════════════════════════
+   SECTION 4: PHOTO GALLERY STACK
+════════════════════════════════════════════ */
+#gallery-stack {
+  position: relative;
+  background: linear-gradient(170deg, var(--ivory) 0%, #f8eed8 50%, var(--ivory) 100%);
+  padding: 40px 16px 30px;
+  flex-direction: column;
+  min-height: auto;
+  overflow: hidden;
+}
+
+#gallery-stack::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255, 253, 248, 0.7), rgba(255, 248, 239, 0.84)),
+    url("assets/bride-and-groom/bride-and-groom-card-1.jpeg") center/cover no-repeat;
+  opacity: 0.28;
+  filter: blur(2px);
+  transform: scale(1.05);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 34px;
+  position: relative;
+  z-index: 2;
+}
+
+.gallery-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 300;
+  color: var(--text-dark);
+}
+.gallery-title em { font-style: italic; color: var(--gold-dark); }
+
+/* True 3D photo stack */
+.photo-stack-container {
+  position: relative;
+  width: min(95vw, 980px);
+  height: 930px;
+  margin: 0 auto;
+  perspective: 1100px;
+  transform-style: preserve-3d;
+  padding: 8px 0 0;
+  z-index: 1;
+}
+
+.photo-frame {
+  position: absolute;
+  width: min(38vw, 280px);
+  aspect-ratio: 3 / 4;
+  opacity: 0.35;
+  transform: translate3d(0, 0, -60px) rotateY(18deg) scale(0.92);
+  transition: transform 0.45s ease, opacity 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+  cursor: pointer;
+  will-change: transform;
+  filter: saturate(0.92);
+}
+.photo-frame.visible {
+  opacity: 1;
+}
+.photo-frame:hover {
+  box-shadow: 0 28px 60px rgba(0,0,0,0.2);
+  filter: saturate(1.05);
+}
+
+.photo-frame-inner {
+  width: 100%;
+  height: 100%;
+  background: white;
+  padding: 14px 14px 50px;
+  border-radius: 4px;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.12), 0 5px 15px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.photo-img {
+  flex: 1;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--cream);
+}
+.photo-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.photo-frame:hover .photo-img img { transform: scale(1.05); }
+
+/* Placeholder photo content */
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(145deg, var(--cream), var(--blush));
+}
+.photo-placeholder-icon { font-size: 32px; opacity: 0.5; }
+.photo-placeholder-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+.photo-caption {
+  margin-top: 8px;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+@media (max-width: 768px) {
+  #gallery-stack {
+    padding: 28px 10px 24px;
+  }
+  .photo-stack-container {
+    width: min(96vw, 470px);
+    height: 980px;
+  }
+  .photo-frame {
+    width: min(44vw, 200px);
+  }
+}
+
+/* ════════════════════════════════════════════
+   SECTION 5: CELEBRATIONS
+════════════════════════════════════════════ */
+#celebrations {
+  background: var(--ivory);
+  padding: 120px 20px;
+  flex-direction: column;
+}
+
+.celebrations-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.celebrations-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 900px;
+  width: 100%;
+}
+@media (max-width: 700px) {
+  .celebrations-grid { grid-template-columns: 1fr; }
+}
+
+.celebration-card {
+  background: white;
+  border-radius: 24px;
+  padding: 50px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 50px rgba(100,70,30,0.08);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+.celebration-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 70px rgba(100,70,30,0.14);
+}
+
+.celebration-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: scaleX(0);
+  transition: transform 0.5s ease;
+}
+.celebration-card:hover::after { transform: scaleX(1); }
+
+.cel-icon { font-size: 40px; display: block; margin-bottom: 16px; }
+.cel-type {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.cel-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+.cel-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--text-light);
+  margin-bottom: 30px;
+}
+.cel-divider { width: 40px; height: 1px; background: var(--gold); margin: 0 auto 24px; }
+.cel-info {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  line-height: 2.2;
+  color: var(--text-mid);
+  letter-spacing: 1px;
+}
+.cel-info strong { color: var(--text-dark); font-weight: 400; }
+.cel-tagline {
+  margin-top: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* ════════════════════════════════════════════
+   SECTION 6: PHOTO UPLOAD GALLERY
+════════════════════════════════════════════ */
+#upload-gallery {
+  background: linear-gradient(160deg, #f8eed8 0%, var(--ivory) 100%);
+  padding: 120px 20px;
+  flex-direction: column;
+}
+
+.upload-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 1000px;
+  width: 100%;
+  margin-top: 60px;
+}
+@media (max-width: 800px) { .upload-gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 400px) { .upload-gallery-grid { grid-template-columns: 1fr 1fr; } }
+
+.upload-slot {
+  aspect-ratio: 3/4;
+  border: 1.5px dashed rgba(201,160,96,0.4);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.6);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.upload-slot:hover {
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.9);
+  transform: scale(1.02);
+}
+.upload-slot input[type=file] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.upload-icon { font-size: 28px; }
+.upload-text {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--text-light);
+  text-transform: uppercase;
+}
+.upload-preview {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* ════════════════════════════════════════════
+   SECTION 7: VENUE
+════════════════════════════════════════════ */
+#venue {
+  background: linear-gradient(160deg, var(--ivory) 0%, #f0dbb5 100%);
+  padding: 120px 20px;
+  flex-direction: column;
+}
+
+.venue-tabs {
+  display: flex;
+  gap: 0;
+  background: rgba(201,160,96,0.1);
+  border-radius: 50px;
+  padding: 5px;
+  margin-bottom: 50px;
+  border: 1px solid rgba(201,160,96,0.2);
+}
+.venue-tab {
+  padding: 10px 28px;
+  border: none;
+  background: transparent;
+  color: var(--text-light);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+.venue-tab.active {
+  background: var(--gold);
+  color: white;
+}
+
+.venue-card {
+  background: white;
+  border-radius: 24px;
+  padding: 60px 50px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(100,70,30,0.1);
+  text-align: center;
+  position: relative;
+}
+
+.venue-map-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  margin: 0 auto 30px;
+  animation: venuePulse 2.5s infinite;
+  box-shadow: 0 0 0 0 rgba(201,160,96,0.4);
+}
+@keyframes venuePulse {
+  0% { box-shadow: 0 0 0 0 rgba(201,160,96,0.4); }
+  70% { box-shadow: 0 0 0 20px rgba(201,160,96,0); }
+  100% { box-shadow: 0 0 0 0 rgba(201,160,96,0); }
+}
+
+.venue-event-title {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.venue-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+.venue-detail {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 2;
+  letter-spacing: 1px;
+}
+.venue-divider { width: 50px; height: 1px; background: var(--gold); margin: 24px auto; }
+.venue-directions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 30px;
+  border: 1px solid var(--gold);
+  border-radius: 50px;
+  color: var(--gold-dark);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+.venue-directions:hover {
+  background: var(--gold);
+  color: white;
+}
+
+/* ════════════════════════════════════════════
+   SECTION 8: LOVE TIMELINE
+════════════════════════════════════════════ */
+#timeline {
+  background: var(--ivory);
+  padding: 120px 20px;
+  flex-direction: column;
+}
+
+.timeline-container {
+  max-width: 700px;
+  width: 100%;
+  position: relative;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--gold), var(--gold), transparent);
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.timeline-item:nth-child(even) {
+  flex-direction: row-reverse;
+  transform: translateX(40px);
+}
+.timeline-item:nth-child(odd) {
+  transform: translateX(-40px);
+}
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateX(0) !important;
+}
+
+.timeline-content {
+  width: calc(50% - 40px);
+  text-align: right;
+  padding-right: 30px;
+}
+.timeline-item:nth-child(even) .timeline-content {
+  text-align: left;
+  padding-right: 0;
+  padding-left: 30px;
+}
+
+.timeline-year {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--gold-light);
+  line-height: 1;
+}
+.timeline-desc {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  color: var(--text-mid);
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.timeline-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 3px solid var(--ivory);
+  box-shadow: 0 0 0 4px rgba(201,160,96,0.2);
+  flex-shrink: 0;
+  z-index: 1;
+  position: relative;
+}
+
+.timeline-spacer { width: calc(50% - 40px); }
+
+/* ════════════════════════════════════════════
+   SECTION 9: SCRIPTURE / FOOTER
+════════════════════════════════════════════ */
+#scripture {
+  background: linear-gradient(160deg, #2c1e0f 0%, #3d2a12 100%);
+  padding: 120px 20px;
+  flex-direction: column;
+  text-align: center;
+}
+
+.scripture-inner {
+  max-width: 700px;
+  position: relative;
+  z-index: 2;
+}
+
+#scripture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(201,160,96,0.08) 0%, transparent 70%);
+}
+
+.scripture-quote-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 120px;
+  color: var(--gold);
+  opacity: 0.2;
+  line-height: 0.5;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.scripture-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.scripture-ref {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-bottom: 50px;
+}
+
+.scripture-divider {
+  width: 80px;
+  height: 1px;
+  background: rgba(201,160,96,0.4);
+  margin: 0 auto 50px;
+}
+
+.couple-names-footer {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 300;
+  color: white;
+  margin-bottom: 16px;
+}
+.couple-names-footer em { color: var(--gold-light); font-style: italic; }
+
+.footer-dates {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 60px;
+}
+
+.footer-credit {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ─── REVEAL ANIMATIONS ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── GOLD ORNAMENT LINES ─── */
+.gold-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto;
+}
+.gold-line-full {
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 20px auto;
+}
+
+/* ─── NAV ─── */
+.floating-nav {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 12px 30px;
+  background: rgba(253,248,240,0.85);
+  backdrop-filter: blur(20px);
+  border-radius: 50px;
+  border: 1px solid rgba(201,160,96,0.2);
+  z-index: 1000;
+  box-shadow: 0 10px 40px rgba(100,70,30,0.08);
+  opacity: 0;
+  animation: fadeDown 1s 2s forwards;
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.nav-dot:hover, .nav-dot.active { background: var(--gold); transform: scale(1.5); }
+.nav-dot[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--text-light);
+  white-space: nowrap;
+  background: var(--ivory);
+  padding: 3px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(201,160,96,0.2);
+}
+.nav-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--gold-dark);
+}
+</style>
+</head>
+<body>
+
+<!-- Floating particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Navigation -->
+<nav class="floating-nav" id="nav">
+  <span class="nav-name">J & S</span>
+  <div class="nav-dot active" title="Home" onclick="scrollToSection('hero')"></div>
+  <div class="nav-dot" title="Invitation" onclick="scrollToSection('invitation')"></div>
+  <div class="nav-dot" title="Countdown" onclick="scrollToSection('countdown')"></div>
+  <div class="nav-dot" title="Gallery" onclick="scrollToSection('gallery-stack')"></div>
+  <div class="nav-dot" title="Venue" onclick="scrollToSection('venue')"></div>
+  <div class="nav-dot" title="Timeline" onclick="scrollToSection('timeline')"></div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     SECTION 1: HERO
+══════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-bg-circle"></div>
+  <div class="hero-bg-circle"></div>
+
+  <p class="hero-eyebrow">With Joy We Invite You</p>
+
+  <h1 class="hero-title">
+    <em>Jibin Joseph</em>
+    <span class="hero-ampersand">&</span>
+    <em>Soumya Anna Antony</em>
+  </h1>
+
+  <div class="hero-divider">
+    <div class="hero-divider-line"></div>
+    <span class="hero-divider-icon">💍</span>
+    <div class="hero-divider-line"></div>
+  </div>
+
+  <p class="hero-sub">Two Hearts · One Journey · Forever Begins</p>
+
+  <!-- Flip Card -->
+  <div class="flip-card-scene">
+    <div class="flip-card" id="mainCard">
+      <div class="flip-card-front">
+        <!-- Try real image, fallback to placeholder -->
+        <div id="cardFront"></div>
+      </div>
+      <div class="flip-card-back">
+        <div id="cardBack"></div>
+      </div>
+    </div>
+    <span class="flip-hint">Scroll to reveal</span>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 2: INVITATION
+══════════════════════════════════════════ -->
+<section id="invitation">
+  <div style="position:absolute;inset:0;pointer-events:none">
+    <div class="ornament ornament-tl">✦</div>
+    <div class="ornament ornament-tr">✦</div>
+    <div class="ornament ornament-bl">✦</div>
+    <div class="ornament ornament-br">✦</div>
+  </div>
+
+  <div class="invitation-inner">
+    <p class="section-label reveal">Wedding Invitation</p>
+    <h2 class="invitation-title reveal">Join Us for Our<br><em style="font-style:italic;color:var(--gold-dark)">Engagement & Wedding</em></h2>
+    <div class="gold-line-full reveal"></div>
+    <p class="invitation-subtitle reveal" style="margin-top:20px;">St Marys Church, Angelvalley</p>
+
+    <div class="event-cards reveal">
+      <div class="event-card">
+        <span class="event-icon">💍</span>
+        <p class="event-type">Engagement Ceremony</p>
+        <p class="event-name">Engagement</p>
+        <div class="event-detail">
+          <strong>Monday, 11th May 2026</strong><br>
+          Time: 11:30 AM<br>
+          Venue: St Marys Church<br>
+          Angelvalley
+        </div>
+      </div>
+      <div class="event-card">
+        <span class="event-icon">💒</span>
+        <p class="event-type">Wedding Ceremony</p>
+        <p class="event-name">Marriage</p>
+        <div class="event-detail">
+          <strong>Saturday, 16th May 2026</strong><br>
+          Time: 10:30 AM<br>
+          Venue: St Marys Church<br>
+          Angelvalley
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <a href="#" class="download-btn" onclick="downloadInvitation(event)">
+        ⬇ Download Invitation
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3: COUNTDOWN
+══════════════════════════════════════════ -->
+<section id="countdown">
+  <p class="countdown-eyebrow reveal">Time Is Ticking</p>
+  <h2 class="countdown-title reveal">Counting Down <em>With Joy</em></h2>
+
+  <div class="countdown-tabs reveal">
+    <button class="tab-btn active" onclick="switchCountdown('engagement', this)">💍 Engagement</button>
+    <button class="tab-btn" onclick="switchCountdown('wedding', this)">💒 Wedding</button>
+  </div>
+
+  <div class="countdown-display reveal">
+    <div class="count-unit">
+      <span class="count-number" id="cd-days">00</span>
+      <span class="count-label">Days</span>
+    </div>
+    <span class="count-separator">:</span>
+    <div class="count-unit">
+      <span class="count-number" id="cd-hours">00</span>
+      <span class="count-label">Hours</span>
+    </div>
+    <span class="count-separator">:</span>
+    <div class="count-unit">
+      <span class="count-number" id="cd-minutes">00</span>
+      <span class="count-label">Minutes</span>
+    </div>
+    <span class="count-separator">:</span>
+    <div class="count-unit">
+      <span class="count-number" id="cd-seconds">00</span>
+      <span class="count-label">Seconds</span>
+    </div>
+  </div>
+
+  <p class="countdown-event-label reveal" id="cd-label">Monday, 11th May 2026 — Engagement at 11:30 AM</p>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4: PHOTO STACK GALLERY
+══════════════════════════════════════════ -->
+<section id="gallery-stack">
+  <div class="gallery-header">
+    <p class="section-label reveal">Featured Moments</p>
+    <h2 class="gallery-title reveal"><em>Photo Gallery</em></h2>
+    <div class="gold-line reveal" style="margin-top:20px;"></div>
+  </div>
+
+  <div class="photo-stack-container" id="photoStack">
+    <!-- Generated by JS -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5: CELEBRATIONS
+══════════════════════════════════════════ -->
+<section id="celebrations">
+  <div class="celebrations-header">
+    <p class="section-label reveal">Save the Date</p>
+    <h2 class="invitation-title reveal">Our <em style="font-style:italic;color:var(--gold-dark)">Celebrations</em></h2>
+    <div class="gold-line-full reveal"></div>
+  </div>
+
+  <div class="celebrations-grid reveal">
+    <div class="celebration-card">
+      <span class="cel-icon">💍</span>
+      <p class="cel-type">Engagement Ceremony</p>
+      <h3 class="cel-title">Ring Exchange</h3>
+      <p class="cel-subtitle">Two hearts becoming one promise</p>
+      <div class="cel-divider"></div>
+      <div class="cel-info">
+        <strong>Date:</strong> Monday, 11th May 2026<br>
+        <strong>Time:</strong> 11:30 AM<br>
+        <strong>Venue:</strong> St Marys Church, Angelvalley
+      </div>
+    </div>
+    <div class="celebration-card">
+      <span class="cel-icon">💒</span>
+      <p class="cel-type">Wedding Ceremony</p>
+      <h3 class="cel-title">Holy Matrimony</h3>
+      <p class="cel-subtitle">Bound by love, blessed for eternity</p>
+      <div class="cel-divider"></div>
+      <div class="cel-info">
+        <strong>Date:</strong> Saturday, 16th May 2026<br>
+        <strong>Time:</strong> 10:30 AM<br>
+        <strong>Venue:</strong> St Marys Church, Angelvalley
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 7: VENUE
+══════════════════════════════════════════ -->
+<section id="venue">
+  <div class="gallery-header" style="margin-bottom:0;">
+    <p class="section-label reveal">Find Us</p>
+    <h2 class="gallery-title reveal">Venue &amp; <em>Directions</em></h2>
+    <div class="gold-line reveal" style="margin-top:20px;margin-bottom:40px;"></div>
+  </div>
+
+  <div class="venue-tabs reveal">
+    <button class="venue-tab active" onclick="switchVenue('engagement', this)">💍 Engagement Venue</button>
+    <button class="venue-tab" onclick="switchVenue('wedding', this)">💒 Wedding Venue</button>
+  </div>
+
+  <div class="venue-card reveal" id="venueCard">
+    <div class="venue-map-icon">💍</div>
+    <p class="venue-event-title" id="venueEventType">Engagement Ceremony</p>
+    <h3 class="venue-name">St Marys Church</h3>
+    <div class="venue-divider"></div>
+    <div class="venue-detail" id="venueDetail">
+      <strong>Event:</strong> Engagement Ceremony<br>
+      <strong>Date:</strong> Monday, 11 May 2026<br>
+      <strong>Location:</strong> St Marys Church, Angelvalley
+    </div>
+    <div class="venue-divider"></div>
+    <a href="https://maps.google.com/?q=St+Marys+Church+Angelvalley" target="_blank" class="venue-directions">
+      ↗ Get Directions
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 8: LOVE TIMELINE
+══════════════════════════════════════════ -->
+<section id="timeline">
+  <div class="gallery-header">
+    <p class="section-label reveal">Our Journey</p>
+    <h2 class="gallery-title reveal">Love Journey <em>2015 - 2026</em></h2>
+    <div class="gold-line reveal" style="margin-top:20px;"></div>
+  </div>
+
+  <div class="timeline-container" style="margin-top:60px;">
+    <div class="timeline-line"></div>
+
+    <div class="timeline-item" data-year="2015">
+      <div class="timeline-content">
+        <div class="timeline-year">2015</div>
+        <div class="timeline-desc">A Beautiful Beginning</div>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-spacer"></div>
+    </div>
+
+    <div class="timeline-item" data-year="2017">
+      <div class="timeline-spacer"></div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2017</div>
+        <div class="timeline-desc">Growing In Faith & Love</div>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-year="2019">
+      <div class="timeline-content">
+        <div class="timeline-year">2019</div>
+        <div class="timeline-desc">Prayers & Trust</div>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-spacer"></div>
+    </div>
+
+    <div class="timeline-item" data-year="2021">
+      <div class="timeline-spacer"></div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2021</div>
+        <div class="timeline-desc">Deeper Connection</div>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-year="2024">
+      <div class="timeline-content">
+        <div class="timeline-year">2024</div>
+        <div class="timeline-desc">Promise & Commitment</div>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-spacer"></div>
+    </div>
+
+    <div class="timeline-item" data-year="2026">
+      <div class="timeline-spacer"></div>
+      <div class="timeline-dot" style="background:var(--gold);box-shadow:0 0 0 6px rgba(201,160,96,0.3);width:18px;height:18px;"></div>
+      <div class="timeline-content">
+        <div class="timeline-year" style="color:var(--gold);">2026</div>
+        <div class="timeline-desc">Holy Matrimony 💍</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="reveal" style="font-family:'Cormorant Garamond';font-style:italic;font-size:18px;color:var(--text-light);text-align:center;max-width:500px;margin-top:60px;line-height:1.8;">
+    From a beautiful beginning in 2015, through years of prayers, trust, and growing love, their journey reaches holy matrimony in 2026.
+  </p>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 9: SCRIPTURE & FOOTER
+══════════════════════════════════════════ -->
+<section id="scripture">
+  <div class="scripture-inner">
+    <span class="scripture-quote-mark">"</span>
+
+    <p class="scripture-text reveal">
+      Two are better than one... if either of them falls down, one can help the other up.
+    </p>
+    <p class="scripture-ref reveal">— Ecclesiastes 4:9</p>
+
+    <div class="scripture-divider reveal"></div>
+
+    <p class="scripture-text reveal" style="font-size:clamp(16px,2vw,20px);">
+      Love is patient, love is kind. It always protects, always trusts, always hopes, always perseveres.
+    </p>
+    <p class="scripture-ref reveal">— 1 Corinthians 13</p>
+
+    <div class="scripture-divider reveal"></div>
+
+    <p class="scripture-text reveal" style="font-size:clamp(18px,2.5vw,26px);">
+      I have found the one whom my soul loves.
+    </p>
+    <p class="scripture-ref reveal">— Song of Solomon 3:4</p>
+
+    <div style="height:60px;"></div>
+
+    <div class="couple-names-footer reveal">
+      <em>Jibin</em> & <em>Soumya</em>
+    </div>
+    <p class="footer-dates reveal">Engagement · May 11, 2026 &nbsp;|&nbsp; Wedding · May 16, 2026</p>
+
+    <div class="scripture-divider reveal" style="margin-top:50px;"></div>
+
+    <p class="footer-credit">Made with ❤️ for Jibin &amp; Soumya</p>
+  </div>
+</section>
+
+<script>
+// ─── PARTICLES ───────────────────────────────────────
+const particleContainer = document.getElementById('particles');
+for (let i = 0; i < 25; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.cssText = `
+    left: ${Math.random() * 100}%;
+    --dur: ${6 + Math.random() * 10}s;
+    --delay: ${Math.random() * 10}s;
+    --drift: ${-80 + Math.random() * 160}px;
+    width: ${2 + Math.random() * 3}px;
+    height: ${2 + Math.random() * 3}px;
+  `;
+  particleContainer.appendChild(p);
+}
+
+// ─── CARD SETUP ──────────────────────────────────────
+function setupCards() {
+  const front = document.getElementById('cardFront');
+  const back = document.getElementById('cardBack');
+  
+  // Try to load real images, with fallback
+  const frontImg = new Image();
+  frontImg.onload = () => {
+    front.innerHTML = '';
+    front.style.cssText = 'width:100%;height:100%;position:relative;';
+    const img = document.createElement('img');
+    img.src = 'assets/bride-and-groom/bride-and-groom-card-1.jpeg';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:20px;';
+    const overlay = document.createElement('div');
+    overlay.className = 'card-overlay';
+    overlay.innerHTML = `<p class="card-overlay-text">Jibin & Soumya</p><p class="card-overlay-date">Save the Date · May 2026</p>`;
+    front.appendChild(img);
+    front.appendChild(overlay);
+  };
+  frontImg.onerror = () => {
+    front.className = 'card-face-placeholder card-face-front-bg';
+    front.innerHTML = `
+      <div class="card-face-icon">💍</div>
+      <h3 class="card-face-title">Save the Date</h3>
+      <div class="card-face-divider"></div>
+      <p class="card-face-names">Jibin Joseph<br>&<br>Soumya Anna Antony</p>
+      <div class="card-face-divider"></div>
+      <p class="card-face-date">May 2026 · Angelvalley</p>
+    `;
+  };
+  frontImg.src = 'assets/bride-and-groom/bride-and-groom-card-1.jpeg';
+
+  const backImg = new Image();
+  backImg.onload = () => {
+    back.innerHTML = '';
+    back.style.cssText = 'width:100%;height:100%;position:relative;';
+    const img = document.createElement('img');
+    img.src = 'assets/bride-and-groom/bride-and-groom-card-2.jpeg';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:20px;';
+    const overlay = document.createElement('div');
+    overlay.className = 'card-overlay';
+    overlay.innerHTML = `<p class="card-overlay-text">Together Forever</p><p class="card-overlay-date">Engagement · Wedding · May 2026</p>`;
+    back.appendChild(img);
+    back.appendChild(overlay);
+  };
+  backImg.onerror = () => {
+    back.className = 'card-face-placeholder card-face-back-bg';
+    back.innerHTML = `
+      <div class="card-face-icon">💒</div>
+      <h3 class="card-face-title">Together Forever</h3>
+      <div class="card-face-divider"></div>
+      <p class="card-face-names">Engagement<br>11th May 2026<br><br>Wedding<br>16th May 2026</p>
+      <div class="card-face-divider"></div>
+      <p class="card-face-date">St Marys Church · Angelvalley</p>
+    `;
+  };
+  backImg.src = 'assets/bride-and-groom/bride-and-groom-card-2.jpeg';
+}
+setupCards();
+
+// ─── SCROLL-BASED CARD FLIP ───────────────────────────
+const mainCard = document.getElementById('mainCard');
+let cardFlipped = false;
+window.addEventListener('scroll', () => {
+  const heroH = document.getElementById('hero').offsetHeight;
+  const scrollY = window.scrollY;
+  const flipThreshold = heroH * 0.4;
+  if (scrollY > flipThreshold && !cardFlipped) {
+    mainCard.classList.add('flipped');
+    cardFlipped = true;
+  } else if (scrollY <= flipThreshold && cardFlipped) {
+    mainCard.classList.remove('flipped');
+    cardFlipped = false;
+  }
+});
+
+// Click to flip too
+mainCard.addEventListener('click', () => {
+  mainCard.classList.toggle('flipped');
+  cardFlipped = mainCard.classList.contains('flipped');
+});
+
+// ─── PHOTO STACK GALLERY ─────────────────────────────
+const photoNames = [
+  'Moment One','Moment Two','Moment Three','Moment Four',
+  'Moment Five','Moment Six','Moment Seven','Moment Eight'
+];
+const scatterDesktop = [
+  { x: 6, y: 40, r: -8 },
+  { x: 38, y: 0, r: 6 },
+  { x: 67, y: 48, r: -5 },
+  { x: 4, y: 360, r: 7 },
+  { x: 33, y: 310, r: -3 },
+  { x: 64, y: 335, r: 8 },
+  { x: 19, y: 655, r: -7 },
+  { x: 52, y: 620, r: 5 }
+];
+const scatterMobile = [
+  { x: 4, y: 20, r: -7 },
+  { x: 47, y: 40, r: 5 },
+  { x: 7, y: 250, r: 6 },
+  { x: 49, y: 280, r: -6 },
+  { x: 8, y: 510, r: -4 },
+  { x: 50, y: 550, r: 7 },
+  { x: 6, y: 760, r: -5 },
+  { x: 48, y: 790, r: 4 }
+];
+
+function applyScatterLayout() {
+  const mobile = window.innerWidth <= 768;
+  const map = mobile ? scatterMobile : scatterDesktop;
+  const width = photoStack.clientWidth;
+
+  stackFrames.forEach((frame, idx) => {
+    const p = map[idx % map.length];
+    frame.dataset.baseX = String((p.x / 100) * width);
+    frame.dataset.baseY = String(p.y);
+    frame.dataset.baseR = String(p.r);
+  });
+}
+
+const photoStack = document.getElementById('photoStack');
+for (let i = 1; i <= 8; i++) {
+  const frame = document.createElement('div');
+  frame.className = 'photo-frame';
+  frame.dataset.index = String(i - 1);
+  frame.innerHTML = `
+    <div class="photo-frame-inner">
+      <div class="photo-img" id="photoImg${i}">
+        <div class="photo-placeholder">
+          <span class="photo-placeholder-icon">🌸</span>
+          <span class="photo-placeholder-text">${photoNames[i-1]}</span>
+        </div>
+      </div>
+    </div>
+    <p class="photo-caption">Jibin & Soumya</p>
+  `;
+  photoStack.appendChild(frame);
+
+  // Try loading real image
+  const img = new Image();
+  img.onload = ((idx) => () => {
+    const container = document.getElementById(`photoImg${idx}`);
+    if (container) {
+      container.innerHTML = `<img src="assets/bride-and-groom/bride-and-groom-${idx}.jpeg" alt="Jibin & Soumya moment ${idx}">`;
+    }
+  })(i);
+  img.src = `assets/bride-and-groom/bride-and-groom-${i}.jpeg`;
+}
+
+const stackFrames = Array.from(document.querySelectorAll('.photo-frame'));
+const galleryStackSection = document.getElementById('gallery-stack');
+applyScatterLayout();
+
+function updatePhotoStack3D() {
+  if (!photoStack || !stackFrames.length || !galleryStackSection) return;
+  const viewportH = window.innerHeight;
+  const activeZone = viewportH * 0.85;
+
+  stackFrames.forEach((frame, idx) => {
+    const cardRect = frame.getBoundingClientRect();
+    const centerDelta = cardRect.top + cardRect.height / 2 - activeZone / 2;
+    const normalized = Math.max(-1, Math.min(1, centerDelta / (viewportH * 0.45)));
+    const strength = 1 - Math.abs(normalized);
+    const side = idx % 2 === 0 ? -1 : 1;
+    const baseX = Number(frame.dataset.baseX || 0);
+    const baseY = Number(frame.dataset.baseY || 0);
+    const baseR = Number(frame.dataset.baseR || 0);
+
+    const x = baseX + normalized * 20 + side * (1 - strength) * 12;
+    const y = baseY + (1 - strength) * 48;
+    const z = -120 + strength * 130;
+    const rotateX = 14 - strength * 16;
+    const rotateY = side * 9 + normalized * 8;
+    const rotateZ = baseR + side * (4 - strength * 5);
+    const scale = 0.84 + strength * 0.2;
+    const opacity = 0.22 + strength * 0.78;
+
+    frame.style.zIndex = String(100 + Math.round(strength * 80));
+    frame.style.opacity = String(opacity);
+    frame.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${scale})`;
+  });
+}
+
+// ─── COUNTDOWN TIMER ─────────────────────────────────
+const DATES = {
+  engagement: new Date('2026-05-11T11:30:00'),
+  wedding: new Date('2026-05-16T10:30:00')
+};
+const LABELS = {
+  engagement: 'Monday, 11th May 2026 — Engagement at 11:30 AM',
+  wedding: 'Saturday, 16th May 2026 — Wedding at 10:30 AM'
+};
+let activeCountdown = 'engagement';
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function updateCountdown() {
+  const target = DATES[activeCountdown];
+  const now = new Date();
+  const diff = target - now;
+  if (diff <= 0) {
+    document.getElementById('cd-days').textContent = '00';
+    document.getElementById('cd-hours').textContent = '00';
+    document.getElementById('cd-minutes').textContent = '00';
+    document.getElementById('cd-seconds').textContent = '00';
+    return;
+  }
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((diff % (1000*60)) / 1000);
+
+  document.getElementById('cd-days').textContent = pad(days);
+  document.getElementById('cd-hours').textContent = pad(hours);
+  document.getElementById('cd-minutes').textContent = pad(minutes);
+  document.getElementById('cd-seconds').textContent = pad(seconds);
+  document.getElementById('cd-label').textContent = LABELS[activeCountdown];
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+function switchCountdown(type, btn) {
+  activeCountdown = type;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateCountdown();
+}
+
+// ─── VENUE SWITCH ─────────────────────────────────────
+const VENUE_DATA = {
+  engagement: {
+    icon: '💍',
+    type: 'Engagement Ceremony',
+    detail: `<strong>Event:</strong> Engagement Ceremony<br><strong>Date:</strong> Monday, 11 May 2026<br><strong>Location:</strong> St Marys Church, Angelvalley`
+  },
+  wedding: {
+    icon: '💒',
+    type: 'Wedding Ceremony',
+    detail: `<strong>Event:</strong> Wedding Ceremony<br><strong>Date:</strong> Saturday, 16 May 2026<br><strong>Location:</strong> St Marys Church, Angelvalley`
+  }
+};
+
+function switchVenue(type, btn) {
+  document.querySelectorAll('.venue-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const d = VENUE_DATA[type];
+  document.querySelector('.venue-map-icon').textContent = d.icon;
+  document.getElementById('venueEventType').textContent = d.type;
+  document.getElementById('venueDetail').innerHTML = d.detail;
+}
+
+// ─── SCROLL REVEAL ────────────────────────────────────
+const revealElements = document.querySelectorAll('.reveal, .photo-frame, .timeline-item');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+revealElements.forEach(el => observer.observe(el));
+
+// ─── NAV ACTIVE STATE ─────────────────────────────────
+const sections = ['hero','invitation','countdown','gallery-stack','venue','timeline'];
+const navDots = document.querySelectorAll('.nav-dot');
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY + window.innerHeight / 2;
+  sections.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (scrollY >= el.offsetTop && scrollY < el.offsetTop + el.offsetHeight) {
+      navDots.forEach(d => d.classList.remove('active'));
+      if (navDots[i]) navDots[i].classList.add('active');
+    }
+  });
+});
+window.addEventListener('scroll', updatePhotoStack3D, { passive: true });
+window.addEventListener('resize', () => {
+  applyScatterLayout();
+  updatePhotoStack3D();
+});
+updatePhotoStack3D();
+
+function scrollToSection(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ─── DOWNLOAD INVITATION ──────────────────────────────
+function downloadInvitation(e) {
+  e.preventDefault();
+  const content = `
+WEDDING INVITATION
+==================
+
+With Joy We Invite You
+
+💍 ENGAGEMENT CEREMONY
+Date: Monday, 11th May 2026
+Time: 11:30 AM
+Venue: St Marys Church, Angelvalley
+
+💒 WEDDING CEREMONY
+Date: Saturday, 16th May 2026
+Time: 10:30 AM
+Venue: St Marys Church, Angelvalley
+
+Jibin Joseph & Soumya Anna Antony
+
+"Two are better than one... if either of them falls down,
+one can help the other up." — Ecclesiastes 4:9
+
+Made with ❤️ for Jibin & Soumya
+  `.trim();
+
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Jibin-Soumya-Wedding-Invitation.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ─── PARALLAX ────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const heroBg = document.querySelectorAll('.hero-bg-circle');
+  heroBg.forEach((el, i) => {
+    el.style.transform = `translate(-50%, calc(-50% + ${scrollY * (0.1 + i * 0.05)}px))`;
+  });
+});
+</script>
+</body>
+</html>

@@ -1860,10 +1860,10 @@ for (let i = 1; i <= 8; i++) {
   img.onload = ((idx) => () => {
     const container = document.getElementById(`photoImg${idx}`);
     if (container) {
-      container.innerHTML = `<img src="assets/bride-and-groom/bride-and-groom-${idx}.jpeg" alt="Jibin & Soumya moment ${idx}">`;
+      container.innerHTML = `<img src="assets/bride-and-groom/bride-and-groom-${idx}.jpg" alt="Jibin & Soumya moment ${idx}">`;
     }
   })(i);
-  img.src = `assets/bride-and-groom/bride-and-groom-${i}.jpeg`;
+  img.src = `assets/bride-and-groom/bride-and-groom-${i}.jpg`;
 }
 
 const stackFrames = Array.from(document.querySelectorAll('.photo-frame'));

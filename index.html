@@ -1367,52 +1367,6 @@ section {
 
 /* Photo frame cursor hint */
 .photo-frame { cursor: zoom-in; }
-
-/* ─── LIGHTBOX LOADING SPINNER ─── */
-.lb-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  width: min(82vw, 380px);
-  height: min(60vh, 480px);
-}
-
-.lb-spinner-ring {
-  width: 52px;
-  height: 52px;
-  border: 2px solid rgba(201,160,96,0.15);
-  border-top-color: var(--gold);
-  border-right-color: var(--gold-light);
-  border-radius: 50%;
-  animation: lbSpin 0.9s linear infinite;
-}
-@keyframes lbSpin {
-  to { transform: rotate(360deg); }
-}
-
-.lb-loading-text {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
-  letter-spacing: 4px;
-  color: rgba(255,255,255,0.35);
-  text-transform: uppercase;
-  animation: lbPulse 1.4s ease-in-out infinite;
-}
-@keyframes lbPulse {
-  0%, 100% { opacity: 0.35; }
-  50% { opacity: 0.7; }
-}
-
-/* Image fade-in after load */
-.lb-img-fade {
-  opacity: 0;
-  transition: opacity 0.45s ease;
-}
-.lb-img-fade.lb-img-visible {
-  opacity: 1;
-}
 </style>
 </head>
 <body>
@@ -2059,19 +2013,9 @@ const lightboxCaption = document.getElementById('lightboxCaption');
 const lightboxCounter = document.getElementById('lightboxCounter');
 const lightboxDotsEl = document.getElementById('lightboxDots');
 let lbIndex = 0;
-let lbImages = []; // { src: string, label: string, loaded: bool, blob: string|null }
+let lbImages = []; // { src: string|null, label: string }
 
-// Cache: src -> blob object URL (so we never fetch the same image twice)
-const lbCache = {};
-
-// ── spinner HTML ─────────────────────────────────────
-const LB_SPINNER = `
-  <div class="lb-loading">
-    <div class="lb-spinner-ring"></div>
-    <p class="lb-loading-text">Loading photo…</p>
-  </div>`;
-
-// ── Build dots ────────────────────────────────────────
+// Build dots
 function buildLbDots(count) {
   lightboxDotsEl.innerHTML = '';
   for (let i = 0; i < count; i++) {
@@ -2083,98 +2027,32 @@ function buildLbDots(count) {
 }
 
 function updateLbDots() {
-  lightboxDotsEl.querySelectorAll('.lightbox-dot')
-    .forEach((d, i) => d.classList.toggle('active', i === lbIndex));
+  const dots = lightboxDotsEl.querySelectorAll('.lightbox-dot');
+  dots.forEach((d, i) => d.classList.toggle('active', i === lbIndex));
 }
 
-// ── Render slide with loading state ──────────────────
 function renderLbSlide(idx) {
   const item = lbImages[idx];
-  if (!item) return;
   lightboxCounter.textContent = `${idx + 1}  /  ${lbImages.length}`;
   lightboxCaption.textContent = 'Jibin & Soumya';
   updateLbDots();
 
-  if (!item.src) {
-    // No real image path known yet — show placeholder
+  if (item && item.src) {
+    lightboxContent.innerHTML = `<img class="lightbox-photo" src="${item.src}" alt="Jibin & Soumya photo ${idx+1}">`;
+  } else {
     lightboxContent.innerHTML = `
       <div class="lightbox-placeholder">
         <span class="lightbox-placeholder-icon">🌸</span>
-        <span class="lightbox-placeholder-text">${item.label}</span>
+        <span class="lightbox-placeholder-text">${item ? item.label : 'Moment'}</span>
       </div>`;
-    return;
   }
-
-  // If already cached → show instantly
-  if (lbCache[item.src]) {
-    lightboxContent.innerHTML = `<img class="lightbox-photo lb-img-fade" src="${lbCache[item.src]}" alt="Jibin & Soumya photo ${idx+1}">`;
-    requestAnimationFrame(() => {
-      const img = lightboxContent.querySelector('.lb-img-fade');
-      if (img) img.classList.add('lb-img-visible');
-    });
-    return;
-  }
-
-  // Not cached → show spinner while loading
-  lightboxContent.innerHTML = LB_SPINNER;
-
-  const tempImg = new Image();
-  tempImg.onload = () => {
-    // Store as blob URL to avoid re-download
-    const canvas = document.createElement('canvas');
-    canvas.width = tempImg.naturalWidth;
-    canvas.height = tempImg.naturalHeight;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(tempImg, 0, 0);
-    canvas.toBlob((blob) => {
-      if (blob) {
-        const burl = URL.createObjectURL(blob);
-        lbCache[item.src] = burl;
-        // Only update DOM if this slide is still visible
-        if (lbImages[lbIndex] && lbImages[lbIndex].src === item.src) {
-          lightboxContent.innerHTML = `<img class="lightbox-photo lb-img-fade" src="${burl}" alt="Jibin & Soumya photo ${idx+1}">`;
-          requestAnimationFrame(() => {
-            const img = lightboxContent.querySelector('.lb-img-fade');
-            if (img) img.classList.add('lb-img-visible');
-          });
-        }
-      }
-    }, 'image/jpg', 0.95);
-  };
-  tempImg.onerror = () => {
-    if (lbImages[lbIndex] && lbImages[lbIndex].src === item.src) {
-      lightboxContent.innerHTML = `
-        <div class="lightbox-placeholder">
-          <span class="lightbox-placeholder-icon">🌸</span>
-          <span class="lightbox-placeholder-text">${item.label}</span>
-        </div>`;
-    }
-  };
-  tempImg.src = item.src;
-
-  // Also pre-load adjacent images silently
-  [idx + 1, idx - 1].forEach(adj => {
-    const adjItem = lbImages[(adj + lbImages.length) % lbImages.length];
-    if (adjItem && adjItem.src && !lbCache[adjItem.src]) {
-      const pre = new Image();
-      pre.onload = () => {
-        if (lbCache[adjItem.src]) return;
-        const c2 = document.createElement('canvas');
-        c2.width = pre.naturalWidth; c2.height = pre.naturalHeight;
-        c2.getContext('2d').drawImage(pre, 0, 0);
-        c2.toBlob(b => { if (b) lbCache[adjItem.src] = URL.createObjectURL(b); }, 'image/jpg', 0.95);
-      };
-      pre.src = adjItem.src;
-    }
-  });
 }
 
-// ── Open / close ──────────────────────────────────────
 function openLightbox(idx) {
   lbIndex = idx;
+  renderLbSlide(lbIndex);
   lightbox.classList.add('open');
   document.body.style.overflow = 'hidden';
-  renderLbSlide(lbIndex);
 }
 
 function closeLightbox() {
@@ -2196,10 +2074,12 @@ document.getElementById('lightboxClose').addEventListener('click', closeLightbox
 document.getElementById('lightboxNext').addEventListener('click', lbNext);
 document.getElementById('lightboxPrev').addEventListener('click', lbPrev);
 
+// Close on overlay click (outside frame)
 lightbox.addEventListener('click', (e) => {
   if (e.target === lightbox) closeLightbox();
 });
 
+// Keyboard
 document.addEventListener('keydown', (e) => {
   if (!lightbox.classList.contains('open')) return;
   if (e.key === 'Escape') closeLightbox();
@@ -2207,6 +2087,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft') lbPrev();
 });
 
+// Touch swipe
 let lbTouchX = null;
 lightbox.addEventListener('touchstart', (e) => { lbTouchX = e.touches[0].clientX; }, { passive: true });
 lightbox.addEventListener('touchend', (e) => {
@@ -2216,33 +2097,40 @@ lightbox.addEventListener('touchend', (e) => {
   lbTouchX = null;
 });
 
+// Attach click handler to each photo frame after they are built
+// We hook into the existing photo stack generation by using event delegation
 document.getElementById('photoStack').addEventListener('click', (e) => {
   const frame = e.target.closest('.photo-frame');
   if (!frame) return;
-  openLightbox(parseInt(frame.dataset.index));
+  const idx = parseInt(frame.dataset.index);
+  openLightbox(idx);
 });
 
-// ── Collect image sources from the gallery stack ──────
+// After photo stack JS runs, collect image sources into lbImages
+// Use a MutationObserver to detect when real images get swapped in
 function collectLbImages() {
   lbImages = [];
   for (let i = 1; i <= 8; i++) {
     const container = document.getElementById(`photoImg${i}`);
     const img = container ? container.querySelector('img') : null;
     lbImages.push({
-      src: img ? img.src : `assets/bride-and-groom/bride-and-groom-${i}.jpg`,
+      src: img ? img.src : null,
       label: photoNames[i - 1]
     });
   }
   buildLbDots(lbImages.length);
 }
 
+// Collect initially, then re-collect as images load
 setTimeout(collectLbImages, 100);
 
+// Observe photoStack for DOM changes (real images loading in)
 const lbObserver = new MutationObserver(() => {
   collectLbImages();
+  // If lightbox is open, refresh current slide src in case it just loaded
   if (lightbox.classList.contains('open')) renderLbSlide(lbIndex);
 });
-lbObserver.observe(document.getElementById('photoStack'), { subtree: true, childList: true });
+lbObserver.observe(document.getElementById('photoStack'), { subtree: true, childList: true, attributes: false });
 </script>
 </body>
 </html>

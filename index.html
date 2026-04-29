@@ -617,7 +617,7 @@ section {
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom, rgba(255, 253, 248, 0.7), rgba(255, 248, 239, 0.84)),
-    url("assets/bride-and-groom/bride-and-groom-card-1.jpeg") center/cover no-repeat;
+    url("assets/bride-and-groom/bride-and-groom-card-1.jpg") center/cover no-repeat;
   opacity: 0.28;
   filter: blur(2px);
   transform: scale(1.05);
@@ -1729,7 +1729,7 @@ function setupCards() {
     front.innerHTML = '';
     front.style.cssText = 'width:100%;height:100%;position:relative;';
     const img = document.createElement('img');
-    img.src = 'assets/bride-and-groom/bride-and-groom-card-1.jpeg';
+    img.src = 'assets/bride-and-groom/bride-and-groom-card-1.jpg';
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:20px;';
     const overlay = document.createElement('div');
     overlay.className = 'card-overlay';
@@ -1748,7 +1748,7 @@ function setupCards() {
       <p class="card-face-date">May 2026 · Angelvalley</p>
     `;
   };
-  frontImg.src = 'assets/bride-and-groom/bride-and-groom-card-1.jpeg';
+  frontImg.src = 'assets/bride-and-groom/bride-and-groom-card-1.jpg';
 
   const backImg = new Image();
   backImg.onload = () => {

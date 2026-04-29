@@ -1969,32 +1969,13 @@ function scrollToSection(id) {
 // ─── DOWNLOAD INVITATION ──────────────────────────────
 function downloadInvitation(e) {
   e.preventDefault();
-  const content = `
-WEDDING INVITATION
-==================
 
-With Joy We Invite You
-
-💒 WEDDING CEREMONY
-Date: Saturday, 16th May 2026
-Time: 10:30 AM
-Venue: St Marys Church, Angelvalley
-
-Jibin & Soumya
-
-"Two are better than one... if either of them falls down,
-one can help the other up." — Ecclesiastes 4:9
-
-Made with ❤️ for Jibin & Soumya
-  `.trim();
-
-  const blob = new Blob([content], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url;
-  a.download = 'Jibin-Soumya-Wedding-Invitation.txt';
+  a.href = 'assets/invitation/save-the-date-card.png';
+  a.download = 'Jibin-Soumya-Wedding-Invitation.png';
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(url);
+  document.body.removeChild(a);
 }
 
 // ─── PARALLAX ────────────────────────────────────────

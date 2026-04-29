@@ -1155,9 +1155,244 @@ section {
   font-style: italic;
   color: var(--gold-dark);
 }
+
+/* ════════════════════════════════════════════
+   LIGHTBOX
+════════════════════════════════════════════ */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(20, 12, 4, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.lightbox-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.lightbox-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 60px 80px;
+  box-sizing: border-box;
+}
+@media (max-width: 600px) {
+  .lightbox-inner { padding: 60px 16px 80px; }
+}
+
+.lightbox-img-wrap {
+  position: relative;
+  max-width: min(90vw, 560px);
+  max-height: 82vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.88);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34,1.3,0.64,1), opacity 0.35s ease;
+}
+.lightbox-overlay.open .lightbox-img-wrap {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Polaroid frame */
+.lightbox-frame {
+  background: white;
+  padding: 14px 14px 52px;
+  border-radius: 4px;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 10px 30px rgba(0,0,0,0.3);
+  max-width: 100%;
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox-photo {
+  display: block;
+  max-width: min(82vw, 500px);
+  max-height: 65vh;
+  width: auto;
+  height: auto;
+  border-radius: 2px;
+  object-fit: contain;
+}
+
+/* Placeholder shown when no real image */
+.lightbox-placeholder {
+  width: min(82vw, 380px);
+  height: min(60vh, 480px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(145deg, var(--cream), var(--blush));
+  border-radius: 2px;
+}
+.lightbox-placeholder-icon { font-size: 52px; opacity: 0.5; }
+.lightbox-placeholder-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+.lightbox-caption {
+  margin-top: 10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--text-mid);
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* Close button */
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(201,160,96,0.4);
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.8);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  z-index: 10;
+  line-height: 1;
+}
+.lightbox-close:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: white;
+  transform: rotate(90deg);
+}
+
+/* Prev / Next arrows */
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(201,160,96,0.35);
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.75);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  z-index: 10;
+  flex-shrink: 0;
+}
+.lightbox-arrow:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: white;
+}
+.lightbox-prev { left: 16px; }
+.lightbox-next { right: 16px; }
+@media (max-width: 600px) {
+  .lightbox-prev { left: 6px; }
+  .lightbox-next { right: 6px; }
+  .lightbox-arrow { width: 38px; height: 38px; font-size: 16px; }
+}
+
+/* Counter */
+.lightbox-counter {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Dots indicator */
+.lightbox-dots {
+  position: absolute;
+  bottom: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 7px;
+}
+.lightbox-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.lightbox-dot.active {
+  background: var(--gold);
+  transform: scale(1.3);
+}
+
+/* Gold ornament lines in lightbox */
+.lightbox-gold-line {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(201,160,96,0.5), transparent);
+}
+
+/* Photo frame cursor hint */
+.photo-frame { cursor: zoom-in; }
 </style>
 </head>
 <body>
+
+<!-- ══════════════════════════════════════════
+     LIGHTBOX
+══════════════════════════════════════════ -->
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  <button class="lightbox-arrow lightbox-prev" id="lightboxPrev" aria-label="Previous photo">‹</button>
+
+  <div class="lightbox-inner">
+    <div class="lightbox-img-wrap">
+      <div class="lightbox-frame">
+        <div id="lightboxContent"></div>
+        <p class="lightbox-caption" id="lightboxCaption">Jibin &amp; Soumya</p>
+      </div>
+      <div class="lightbox-gold-line"></div>
+    </div>
+  </div>
+
+  <button class="lightbox-arrow lightbox-next" id="lightboxNext" aria-label="Next photo">›</button>
+
+  <div class="lightbox-dots" id="lightboxDots"></div>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
 
 <!-- Floating particles -->
 <div class="particles" id="particles"></div>
@@ -1770,6 +2005,132 @@ window.addEventListener('scroll', () => {
     el.style.transform = `translate(-50%, calc(-50% + ${scrollY * (0.1 + i * 0.05)}px))`;
   });
 });
+
+// ─── LIGHTBOX ────────────────────────────────────────
+const lightbox = document.getElementById('lightbox');
+const lightboxContent = document.getElementById('lightboxContent');
+const lightboxCaption = document.getElementById('lightboxCaption');
+const lightboxCounter = document.getElementById('lightboxCounter');
+const lightboxDotsEl = document.getElementById('lightboxDots');
+let lbIndex = 0;
+let lbImages = []; // { src: string|null, label: string }
+
+// Build dots
+function buildLbDots(count) {
+  lightboxDotsEl.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const d = document.createElement('div');
+    d.className = 'lightbox-dot' + (i === lbIndex ? ' active' : '');
+    d.addEventListener('click', () => openLightbox(i));
+    lightboxDotsEl.appendChild(d);
+  }
+}
+
+function updateLbDots() {
+  const dots = lightboxDotsEl.querySelectorAll('.lightbox-dot');
+  dots.forEach((d, i) => d.classList.toggle('active', i === lbIndex));
+}
+
+function renderLbSlide(idx) {
+  const item = lbImages[idx];
+  lightboxCounter.textContent = `${idx + 1}  /  ${lbImages.length}`;
+  lightboxCaption.textContent = 'Jibin & Soumya';
+  updateLbDots();
+
+  if (item && item.src) {
+    lightboxContent.innerHTML = `<img class="lightbox-photo" src="${item.src}" alt="Jibin & Soumya photo ${idx+1}">`;
+  } else {
+    lightboxContent.innerHTML = `
+      <div class="lightbox-placeholder">
+        <span class="lightbox-placeholder-icon">🌸</span>
+        <span class="lightbox-placeholder-text">${item ? item.label : 'Moment'}</span>
+      </div>`;
+  }
+}
+
+function openLightbox(idx) {
+  lbIndex = idx;
+  renderLbSlide(lbIndex);
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function lbNext() {
+  lbIndex = (lbIndex + 1) % lbImages.length;
+  renderLbSlide(lbIndex);
+}
+
+function lbPrev() {
+  lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
+  renderLbSlide(lbIndex);
+}
+
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+document.getElementById('lightboxNext').addEventListener('click', lbNext);
+document.getElementById('lightboxPrev').addEventListener('click', lbPrev);
+
+// Close on overlay click (outside frame)
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+
+// Keyboard
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight') lbNext();
+  if (e.key === 'ArrowLeft') lbPrev();
+});
+
+// Touch swipe
+let lbTouchX = null;
+lightbox.addEventListener('touchstart', (e) => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+lightbox.addEventListener('touchend', (e) => {
+  if (lbTouchX === null) return;
+  const dx = e.changedTouches[0].clientX - lbTouchX;
+  if (Math.abs(dx) > 50) { dx < 0 ? lbNext() : lbPrev(); }
+  lbTouchX = null;
+});
+
+// Attach click handler to each photo frame after they are built
+// We hook into the existing photo stack generation by using event delegation
+document.getElementById('photoStack').addEventListener('click', (e) => {
+  const frame = e.target.closest('.photo-frame');
+  if (!frame) return;
+  const idx = parseInt(frame.dataset.index);
+  openLightbox(idx);
+});
+
+// After photo stack JS runs, collect image sources into lbImages
+// Use a MutationObserver to detect when real images get swapped in
+function collectLbImages() {
+  lbImages = [];
+  for (let i = 1; i <= 8; i++) {
+    const container = document.getElementById(`photoImg${i}`);
+    const img = container ? container.querySelector('img') : null;
+    lbImages.push({
+      src: img ? img.src : null,
+      label: photoNames[i - 1]
+    });
+  }
+  buildLbDots(lbImages.length);
+}
+
+// Collect initially, then re-collect as images load
+setTimeout(collectLbImages, 100);
+
+// Observe photoStack for DOM changes (real images loading in)
+const lbObserver = new MutationObserver(() => {
+  collectLbImages();
+  // If lightbox is open, refresh current slide src in case it just loaded
+  if (lightbox.classList.contains('open')) renderLbSlide(lbIndex);
+});
+lbObserver.observe(document.getElementById('photoStack'), { subtree: true, childList: true, attributes: false });
 </script>
 </body>
 </html>

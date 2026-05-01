@@ -393,18 +393,7 @@ section {
   min-height: auto;
   overflow: hidden;
 }
-#gallery-stack::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(255, 253, 248, 0.7), rgba(255, 248, 239, 0.84)),
-    url("assets/bride-and-groom/bride-and-groom-card-1.jpg") center/cover no-repeat;
-  opacity: 0.28;
-  filter: blur(2px);
-  transform: scale(1.05);
-  pointer-events: none;
-  z-index: 0;
-}
+
 .gallery-header { text-align: center; margin-bottom: 34px; position: relative; z-index: 2; }
 .gallery-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 64px); font-weight: 300; color: var(--text-dark); }
 .gallery-title em { font-style: italic; color: var(--gold-dark); }
@@ -526,18 +515,39 @@ section {
 .venue-directions.reception-dir:hover { background: #c07050; color: white; }
 
 /* ═══ TIMELINE ═══ */
-#timeline { background: var(--ivory); padding: 120px 20px; flex-direction: column; }
+#timeline {
+  background: var(--ivory);
+  padding: 120px 20px;
+  flex-direction: column;
+  position: relative;
+}
+#timeline::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('assets/bride-and-groom/background.jpeg') center / cover no-repeat;
+  opacity: 0.75;
+  z-index: 0;
+}
+#timeline::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(253,248,240,0.50) 0%, rgba(44,30,15,0.50) 40%, rgba(60,38,10,0.55) 60%, rgba(253,248,240,0.45) 100%);
+  z-index: 1;
+}
+#timeline > * { position: relative; z-index: 2; }
 .timeline-container { max-width: 700px; width: 100%; position: relative; }
-.timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold), var(--gold), transparent); transform: translateX(-50%); }
+.timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, rgba(232,201,138,0.9), rgba(232,201,138,0.9), transparent); transform: translateX(-50%); }
 .timeline-item { display: flex; align-items: center; margin-bottom: 60px; opacity: 0; transition: opacity 0.6s ease, transform 0.6s ease; }
 .timeline-item:nth-child(even) { flex-direction: row-reverse; transform: translateX(40px); }
 .timeline-item:nth-child(odd) { transform: translateX(-40px); }
 .timeline-item.visible { opacity: 1; transform: translateX(0) !important; }
 .timeline-content { width: calc(50% - 40px); text-align: right; padding-right: 30px; }
 .timeline-item:nth-child(even) .timeline-content { text-align: left; padding-right: 0; padding-left: 30px; }
-.timeline-year { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: var(--gold-light); line-height: 1; }
-.timeline-desc { font-family: 'Josefin Sans', sans-serif; font-size: 11px; color: var(--text-mid); letter-spacing: 2px; margin-top: 4px; }
-.timeline-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 3px solid var(--ivory); box-shadow: 0 0 0 4px rgba(201,160,96,0.2); flex-shrink: 0; z-index: 1; position: relative; }
+.timeline-year { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: #f0d080; line-height: 1; text-shadow: 0 2px 14px rgba(0,0,0,0.65), 0 1px 4px rgba(0,0,0,0.45); }
+.timeline-desc { font-family: 'Josefin Sans', sans-serif; font-size: 11px; color: rgba(255,248,230,0.95); letter-spacing: 2px; margin-top: 4px; text-shadow: 0 1px 8px rgba(0,0,0,0.7); }
+.timeline-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 3px solid rgba(255,255,255,0.85); box-shadow: 0 0 0 4px rgba(201,160,96,0.35), 0 2px 10px rgba(0,0,0,0.3); flex-shrink: 0; z-index: 1; position: relative; }
 .timeline-spacer { width: calc(50% - 40px); }
 
 /* ═══ SCRIPTURE ═══ */
@@ -809,7 +819,7 @@ section {
     <!-- Reception Venue -->
     <div class="venue-card reveal">
       <div class="venue-map-icon reception-icon">🍽️</div>
-      <p class="venue-event-title reception-label">Reception</p>
+      <p class="venue-event-title reception-label">Reception & Dinner</p>
       <h3 class="venue-name">St Thomas Mar Thoma Parish Hall</h3>
       <div class="venue-divider"></div>
       <div class="venue-detail">
@@ -828,8 +838,8 @@ section {
 <!-- SECTION 8: LOVE TIMELINE -->
 <section id="timeline">
   <div class="gallery-header">
-    <p class="section-label reveal">Our Journey</p>
-    <h2 class="gallery-title reveal">Love Journey <em>2015 - 2026</em></h2>
+    <p class="section-label reveal" style="color:var(--gold-light);text-shadow:0 1px 6px rgba(0,0,0,0.5);">Our Journey</p>
+    <h2 class="gallery-title reveal" style="color:#fff;text-shadow:0 2px 16px rgba(0,0,0,0.6);">Love Journey <em style="color:var(--gold-light);">2015 - 2026</em></h2>
     <div class="gold-line reveal" style="margin-top:20px;"></div>
   </div>
   <div class="timeline-container" style="margin-top:60px;">
@@ -865,7 +875,7 @@ section {
       <div class="timeline-content"><div class="timeline-year" style="color:var(--gold);">2026</div><div class="timeline-desc">Holy Matrimony 💒</div></div>
     </div>
   </div>
-  <p class="reveal" style="font-family:'Cormorant Garamond';font-style:italic;font-size:18px;color:var(--text-light);text-align:center;max-width:500px;margin-top:60px;line-height:1.8;">
+  <p class="reveal" style="font-family:'Cormorant Garamond';font-style:italic;font-size:18px;color:rgba(255,248,225,0.95);text-align:center;max-width:500px;margin-top:60px;line-height:1.8;text-shadow:0 1px 10px rgba(0,0,0,0.7);">
     From a beautiful beginning in 2015, through years of prayers, trust, and growing love, their journey reaches holy matrimony in 2026.
   </p>
 </section>

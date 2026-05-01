@@ -516,12 +516,22 @@ section {
 
 /* ═══ TIMELINE ═══ */
 #timeline {
-  background: var(--ivory);
-  padding: 120px 20px;
+  background: #1a1008;
+  padding: 0;
   flex-direction: column;
   position: relative;
+  min-height: unset;
+  /* Section height = 100vw so 1:1 image fits perfectly */
+  width: 100%;
 }
-#timeline::before {
+/* Image wrapper — square aspect ratio, full width */
+.timeline-bg-wrap {
+  position: relative;
+  width: 100%;
+  /* 1:1 ratio: height = width */
+  padding-bottom: 100%;
+}
+.timeline-bg-wrap::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -529,23 +539,35 @@ section {
   opacity: 0.75;
   z-index: 0;
 }
-#timeline::after {
+.timeline-bg-wrap::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgba(253,248,240,0.50) 0%, rgba(44,30,15,0.50) 40%, rgba(60,38,10,0.55) 60%, rgba(253,248,240,0.45) 100%);
+  background: linear-gradient(160deg, rgba(253,248,240,0.45) 0%, rgba(44,30,15,0.52) 40%, rgba(60,38,10,0.58) 60%, rgba(253,248,240,0.40) 100%);
   z-index: 1;
+}
+/* Content sits absolutely inside the square */
+.timeline-content-inner {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  overflow-y: auto;
 }
 #timeline > * { position: relative; z-index: 2; }
 .timeline-container { max-width: 700px; width: 100%; position: relative; }
 .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, rgba(232,201,138,0.9), rgba(232,201,138,0.9), transparent); transform: translateX(-50%); }
-.timeline-item { display: flex; align-items: center; margin-bottom: 60px; opacity: 0; transition: opacity 0.6s ease, transform 0.6s ease; }
+.timeline-item { display: flex; align-items: center; margin-bottom: clamp(18px, 4vw, 60px); opacity: 0; transition: opacity 0.6s ease, transform 0.6s ease; }
 .timeline-item:nth-child(even) { flex-direction: row-reverse; transform: translateX(40px); }
 .timeline-item:nth-child(odd) { transform: translateX(-40px); }
 .timeline-item.visible { opacity: 1; transform: translateX(0) !important; }
 .timeline-content { width: calc(50% - 40px); text-align: right; padding-right: 30px; }
 .timeline-item:nth-child(even) .timeline-content { text-align: left; padding-right: 0; padding-left: 30px; }
-.timeline-year { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: #f0d080; line-height: 1; text-shadow: 0 2px 14px rgba(0,0,0,0.65), 0 1px 4px rgba(0,0,0,0.45); }
+.timeline-year { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 7vw, 48px); font-weight: 300; color: #f0d080; line-height: 1; text-shadow: 0 2px 14px rgba(0,0,0,0.65), 0 1px 4px rgba(0,0,0,0.45); }
 .timeline-desc { font-family: 'Josefin Sans', sans-serif; font-size: 11px; color: rgba(255,248,230,0.95); letter-spacing: 2px; margin-top: 4px; text-shadow: 0 1px 8px rgba(0,0,0,0.7); }
 .timeline-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 3px solid rgba(255,255,255,0.85); box-shadow: 0 0 0 4px rgba(201,160,96,0.35), 0 2px 10px rgba(0,0,0,0.3); flex-shrink: 0; z-index: 1; position: relative; }
 .timeline-spacer { width: calc(50% - 40px); }
@@ -837,47 +859,51 @@ section {
 
 <!-- SECTION 8: LOVE TIMELINE -->
 <section id="timeline">
-  <div class="gallery-header">
-    <p class="section-label reveal" style="color:var(--gold-light);text-shadow:0 1px 6px rgba(0,0,0,0.5);">Our Journey</p>
-    <h2 class="gallery-title reveal" style="color:#fff;text-shadow:0 2px 16px rgba(0,0,0,0.6);">Love Journey <em style="color:var(--gold-light);">2015 - 2026</em></h2>
-    <div class="gold-line reveal" style="margin-top:20px;"></div>
+  <div class="timeline-bg-wrap">
+    <div class="timeline-content-inner">
+      <div class="gallery-header" style="width:100%;text-align:center;margin-bottom:28px;">
+        <p class="section-label reveal" style="color:var(--gold-light);text-shadow:0 1px 6px rgba(0,0,0,0.5);">Our Journey</p>
+        <h2 class="gallery-title reveal" style="color:#fff;text-shadow:0 2px 16px rgba(0,0,0,0.6);">Love Journey <em style="color:var(--gold-light);">2015 - 2026</em></h2>
+        <div class="gold-line reveal" style="margin-top:16px;"></div>
+      </div>
+      <div class="timeline-container" style="margin-top:30px;">
+        <div class="timeline-line"></div>
+        <div class="timeline-item" data-year="2015">
+          <div class="timeline-content"><div class="timeline-year">2015</div><div class="timeline-desc">A Beautiful Beginning</div></div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-spacer"></div>
+        </div>
+        <div class="timeline-item" data-year="2017">
+          <div class="timeline-spacer"></div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content"><div class="timeline-year">2017</div><div class="timeline-desc">Growing In Faith & Love</div></div>
+        </div>
+        <div class="timeline-item" data-year="2019">
+          <div class="timeline-content"><div class="timeline-year">2019</div><div class="timeline-desc">Prayers & Trust</div></div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-spacer"></div>
+        </div>
+        <div class="timeline-item" data-year="2021">
+          <div class="timeline-spacer"></div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content"><div class="timeline-year">2021</div><div class="timeline-desc">Deeper Connection</div></div>
+        </div>
+        <div class="timeline-item" data-year="2024">
+          <div class="timeline-content"><div class="timeline-year">2024</div><div class="timeline-desc">Promise & Commitment</div></div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-spacer"></div>
+        </div>
+        <div class="timeline-item" data-year="2026">
+          <div class="timeline-spacer"></div>
+          <div class="timeline-dot" style="background:var(--gold);box-shadow:0 0 0 6px rgba(201,160,96,0.3);width:18px;height:18px;"></div>
+          <div class="timeline-content"><div class="timeline-year" style="color:var(--gold);">2026</div><div class="timeline-desc">Holy Matrimony 💒</div></div>
+        </div>
+      </div>
+      <p class="reveal" style="font-family:'Cormorant Garamond';font-style:italic;font-size:clamp(14px,3.5vw,18px);color:rgba(255,248,225,0.95);text-align:center;max-width:460px;margin-top:30px;line-height:1.8;text-shadow:0 1px 10px rgba(0,0,0,0.7);">
+        From a beautiful beginning in 2015, through years of prayers, trust, and growing love, their journey reaches holy matrimony in 2026.
+      </p>
+    </div>
   </div>
-  <div class="timeline-container" style="margin-top:60px;">
-    <div class="timeline-line"></div>
-    <div class="timeline-item" data-year="2015">
-      <div class="timeline-content"><div class="timeline-year">2015</div><div class="timeline-desc">A Beautiful Beginning</div></div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-spacer"></div>
-    </div>
-    <div class="timeline-item" data-year="2017">
-      <div class="timeline-spacer"></div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-content"><div class="timeline-year">2017</div><div class="timeline-desc">Growing In Faith & Love</div></div>
-    </div>
-    <div class="timeline-item" data-year="2019">
-      <div class="timeline-content"><div class="timeline-year">2019</div><div class="timeline-desc">Prayers & Trust</div></div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-spacer"></div>
-    </div>
-    <div class="timeline-item" data-year="2021">
-      <div class="timeline-spacer"></div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-content"><div class="timeline-year">2021</div><div class="timeline-desc">Deeper Connection</div></div>
-    </div>
-    <div class="timeline-item" data-year="2024">
-      <div class="timeline-content"><div class="timeline-year">2024</div><div class="timeline-desc">Promise & Commitment</div></div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-spacer"></div>
-    </div>
-    <div class="timeline-item" data-year="2026">
-      <div class="timeline-spacer"></div>
-      <div class="timeline-dot" style="background:var(--gold);box-shadow:0 0 0 6px rgba(201,160,96,0.3);width:18px;height:18px;"></div>
-      <div class="timeline-content"><div class="timeline-year" style="color:var(--gold);">2026</div><div class="timeline-desc">Holy Matrimony 💒</div></div>
-    </div>
-  </div>
-  <p class="reveal" style="font-family:'Cormorant Garamond';font-style:italic;font-size:18px;color:rgba(255,248,225,0.95);text-align:center;max-width:500px;margin-top:60px;line-height:1.8;text-shadow:0 1px 10px rgba(0,0,0,0.7);">
-    From a beautiful beginning in 2015, through years of prayers, trust, and growing love, their journey reaches holy matrimony in 2026.
-  </p>
 </section>
 
 <!-- SECTION 9: SCRIPTURE & FOOTER -->

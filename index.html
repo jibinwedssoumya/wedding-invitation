@@ -993,7 +993,7 @@ section {
     <!-- Reception Venue -->
     <div class="venue-card reveal">
       <div class="venue-map-icon reception-icon">🍽️</div>
-      <p class="venue-event-title reception-label">Reception</p>
+      <p class="venue-event-title reception-label">Reception & Dinner</p>
       <h3 class="venue-name">St Thomas Mar Thoma Parish Hall</h3>
       <div class="venue-divider"></div>
       <div class="venue-detail">
@@ -1494,10 +1494,21 @@ function tryAutoPlay() {
   audio.play().then(() => {
     playing = true;
     showPlayingState();
-  }).catch(() => {
-    // autoplay blocked — user must tap button
-  });
+  }).catch(() => {});
 }
+
+// Start music on the very first interaction anywhere on the page
+function onFirstInteraction() {
+  tryAutoPlay();
+  document.removeEventListener('touchstart', onFirstInteraction);
+  document.removeEventListener('mousedown', onFirstInteraction);
+  document.removeEventListener('keydown', onFirstInteraction);
+  document.removeEventListener('scroll', onFirstInteraction);
+}
+document.addEventListener('touchstart', onFirstInteraction, { once: true, passive: true });
+document.addEventListener('mousedown', onFirstInteraction, { once: true });
+document.addEventListener('keydown',   onFirstInteraction, { once: true });
+document.addEventListener('scroll',    onFirstInteraction, { once: true, passive: true });
 
 function showPlayingState() {
   iconMute.style.display = 'none';

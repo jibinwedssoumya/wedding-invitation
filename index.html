@@ -653,66 +653,218 @@ section {
   position: fixed;
   inset: 0;
   z-index: 99998;
-  background: linear-gradient(160deg, #2c1e0f 0%, #3d2a12 50%, #2c1e0f 100%);
+  background: linear-gradient(160deg, #1a0e05 0%, #2c1e0f 40%, #3d2a12 70%, #1a0e05 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
-  transition: opacity 0.9s ease, visibility 0.9s ease;
+  gap: 0;
+  padding: 20px;
+  text-align: center;
+  overflow: hidden;
+  transition: opacity 1s ease, visibility 1s ease;
 }
 #loading-screen.hidden {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
+
+/* Animated radial glow behind names */
+#loading-screen::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,160,96,0.12) 0%, transparent 70%);
+  animation: glowPulse 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes glowPulse {
+  0%,100% { transform: scale(1);   opacity: 0.7; }
+  50%      { transform: scale(1.3); opacity: 1;   }
+}
+
+/* Floating gold particles inside loader */
+.ls-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gold-light);
+  opacity: 0;
+  animation: lsFloat var(--d,6s) var(--dl,0s) infinite ease-in-out;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes lsFloat {
+  0%   { opacity:0; transform: translateY(60px) scale(0); }
+  15%  { opacity:0.5; }
+  85%  { opacity:0.2; }
+  100% { opacity:0; transform: translateY(-80px) translateX(var(--dx,20px)) scale(1.5); }
+}
+
+/* Decorative top ornament */
+.ls-ornament {
+  font-size: clamp(18px,5vw,28px);
+  color: var(--gold);
+  opacity: 0.5;
+  letter-spacing: 16px;
+  margin-bottom: 20px;
+  animation: lsFadeIn 1.2s 0.2s both;
+  position: relative;
+  z-index: 1;
+}
+
+/* Thin gold line above names */
+.ls-top-line {
+  width: min(120px, 30vw);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin-bottom: 18px;
+  animation: lsFadeIn 1s 0.4s both;
+  position: relative;
+  z-index: 1;
+}
+
 .loading-names {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(36px, 8vw, 72px);
+  font-size: clamp(40px, 11vw, 80px);
   font-weight: 300;
   color: white;
   text-align: center;
-  line-height: 1.2;
+  line-height: 1.15;
+  position: relative;
+  z-index: 1;
+  animation: lsSlideUp 1s 0.5s both;
 }
 .loading-names em { color: var(--gold-light); font-style: italic; }
-.loading-ampersand { color: var(--gold); font-size: 0.6em; margin: 0 8px; }
+.loading-ampersand {
+  color: var(--gold);
+  font-size: 0.55em;
+  margin: 0 6px;
+  vertical-align: middle;
+}
+
+/* Thin gold line below names */
+.ls-bottom-line {
+  width: min(80px, 20vw);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 16px auto 14px;
+  animation: lsFadeIn 1s 0.8s both;
+  position: relative;
+  z-index: 1;
+}
+
 .loading-tagline {
   font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
-  letter-spacing: 6px;
-  color: rgba(255,255,255,0.45);
+  font-size: clamp(8px, 2.5vw, 10px);
+  letter-spacing: clamp(3px, 1.5vw, 7px);
+  color: rgba(255,255,255,0.4);
   text-transform: uppercase;
+  margin-bottom: 32px;
+  animation: lsFadeIn 1s 1s both;
+  position: relative;
+  z-index: 1;
+  padding: 0 10px;
 }
-/* Ring spinner */
+
+/* Spinner */
 .loading-spinner {
-  width: 54px;
-  height: 54px;
-  border: 1px solid rgba(201,160,96,0.2);
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(201,160,96,0.15);
   border-top-color: var(--gold);
+  border-right-color: rgba(201,160,96,0.4);
   border-radius: 50%;
-  animation: spin 1.1s linear infinite;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
 .loading-progress-wrap {
-  width: min(280px, 70vw);
+  width: min(260px, 65vw);
   height: 1px;
-  background: rgba(201,160,96,0.15);
+  background: rgba(201,160,96,0.12);
   border-radius: 1px;
   overflow: hidden;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
 }
 .loading-progress-bar {
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
   border-radius: 1px;
-  transition: width 0.3s ease;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 6px rgba(232,201,138,0.5);
 }
 .loading-percent {
   font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 3px;
-  color: var(--gold-light);
+  color: rgba(201,160,96,0.7);
+  margin-bottom: 0;
+  position: relative;
+  z-index: 1;
 }
+
+/* Enter button */
+#enterBtn {
+  margin-top: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px clamp(28px, 8vw, 44px);
+  background: transparent;
+  border: 1px solid var(--gold);
+  border-radius: 50px;
+  color: var(--gold-light);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: clamp(9px, 2.5vw, 11px);
+  letter-spacing: clamp(3px, 1.5vw, 5px);
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s ease, box-shadow 0.4s ease;
+  animation: lsSlideUp 0.7s ease both;
+  z-index: 1;
+  white-space: nowrap;
+  box-shadow: 0 0 0 0 rgba(201,160,96,0.3);
+}
+#enterBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  z-index: -1;
+  border-radius: 50px;
+}
+#enterBtn:hover, #enterBtn:active { color: white; box-shadow: 0 0 24px rgba(201,160,96,0.4); }
+#enterBtn:hover::before, #enterBtn:active::before { transform: scaleX(1); }
+#enterBtn svg { flex-shrink: 0; width: clamp(12px, 3vw, 16px); height: clamp(12px, 3vw, 16px); }
+
+/* Decorative bottom heart */
+.ls-bottom-ornament {
+  font-size: 14px;
+  margin-top: 20px;
+  opacity: 0.3;
+  position: relative;
+  z-index: 1;
+  animation: lsFadeIn 0.6s 0.3s both;
+}
+
+@keyframes lsFadeIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes lsSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ═══ MUSIC BUTTON ═══ */
 #music-btn {
@@ -771,6 +923,42 @@ section {
   50%      { transform: scaleY(0.3); }
 }
 #music-btn:hover .music-waves span { background: white; }
+
+#enterBtn {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 40px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  border-radius: 50px;
+  color: var(--gold-light);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s ease;
+  animation: fadeUp 0.6s ease forwards;
+}
+#enterBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  z-index: -1;
+  border-radius: 50px;
+}
+#enterBtn:hover { color: white; }
+#enterBtn:hover::before { transform: scaleX(1); }
+#enterBtn svg { flex-shrink: 0; }
+
 </style>
 
 <!-- Google Fonts loaded async for performance -->
@@ -781,21 +969,46 @@ section {
 <body>
 
 <!-- ═══ BACKGROUND MUSIC ═══ -->
-<audio id="bg-music" loop preload="none">
+<audio id="bg-music" loop preload="auto">
   <source src="assets/music/background-music.mp3" type="audio/mpeg">
 </audio>
 
 <!-- ═══ LOADING SCREEN ═══ -->
 <div id="loading-screen">
+  <!-- Floating particles -->
+  <div class="ls-particle" style="left:15%;bottom:0;width:3px;height:3px;--d:7s;--dl:0s;--dx:30px;"></div>
+  <div class="ls-particle" style="left:30%;bottom:0;width:2px;height:2px;--d:9s;--dl:1.5s;--dx:-20px;"></div>
+  <div class="ls-particle" style="left:55%;bottom:0;width:4px;height:4px;--d:6s;--dl:0.8s;--dx:40px;"></div>
+  <div class="ls-particle" style="left:70%;bottom:0;width:2px;height:2px;--d:8s;--dl:2s;--dx:-30px;"></div>
+  <div class="ls-particle" style="left:85%;bottom:0;width:3px;height:3px;--d:7.5s;--dl:0.3s;--dx:20px;"></div>
+  <div class="ls-particle" style="left:42%;bottom:0;width:2px;height:2px;--d:10s;--dl:3s;--dx:-15px;"></div>
+
+  <!-- Top ornament -->
+  <div class="ls-ornament">✦ ✦ ✦</div>
+  <div class="ls-top-line"></div>
+
+  <!-- Names -->
   <div class="loading-names">
     <em>Jibin</em><span class="loading-ampersand">&</span><em>Soumya</em>
   </div>
-  <p class="loading-tagline">Loading your invitation</p>
-  <div class="loading-spinner"></div>
+
+  <div class="ls-bottom-line"></div>
+  <p class="loading-tagline">Two Hearts · One Journey · Forever Begins</p>
+
+  <!-- Loading state -->
+  <div class="loading-spinner" id="loadingSpinner"></div>
   <div class="loading-progress-wrap">
     <div class="loading-progress-bar" id="loadingBar"></div>
   </div>
   <p class="loading-percent" id="loadingPercent">0%</p>
+
+  <!-- Enter button (shown after load) -->
+  <button id="enterBtn" style="display:none" onclick="enterSite()">
+    <span>Open Invitation</span>
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+  </button>
+
+  <div class="ls-bottom-ornament">❤</div>
 </div>
 
 <!-- ═══ MUSIC BUTTON ═══ -->
@@ -993,7 +1206,7 @@ section {
     <!-- Reception Venue -->
     <div class="venue-card reveal">
       <div class="venue-map-icon reception-icon">🍽️</div>
-      <p class="venue-event-title reception-label">Reception & Dinner</p>
+      <p class="venue-event-title reception-label">Reception</p>
       <h3 class="venue-name">St Thomas Mar Thoma Parish Hall</h3>
       <div class="venue-divider"></div>
       <div class="venue-detail">
@@ -1428,11 +1641,12 @@ document.getElementById('photoStack').addEventListener('click', (e) => {
 <script>
 // ═══ LOADING SCREEN ═══
 (function() {
-  const screen   = document.getElementById('loading-screen');
-  const bar      = document.getElementById('loadingBar');
-  const pct      = document.getElementById('loadingPercent');
+  const screen  = document.getElementById('loading-screen');
+  const bar     = document.getElementById('loadingBar');
+  const pct     = document.getElementById('loadingPercent');
+  const spinner = document.getElementById('loadingSpinner');
+  const enterBtn= document.getElementById('enterBtn');
 
-  // All images to preload
   const imageSrcs = [
     'assets/bride-and-groom/bride-and-groom-card-1.jpg',
     'assets/bride-and-groom/bride-and-groom-card-2.jpeg',
@@ -1455,70 +1669,50 @@ document.getElementById('photoStack').addEventListener('click', (e) => {
     const p = Math.round((loaded / total) * 100);
     bar.style.width = p + '%';
     pct.textContent = p + '%';
-    if (loaded >= total) dismiss();
+    if (loaded >= total) showEnterButton();
   }
 
-  function dismiss() {
-    setTimeout(() => {
-      screen.classList.add('hidden');
-      // Auto-play music after loading (requires prior user interaction via loading screen tap)
-      tryAutoPlay();
-    }, 500);
-  }
+  function showEnterButton() {
+    if (spinner)  spinner.style.display  = 'none';
+    if (pct)      pct.style.display      = 'none';
+    if (enterBtn) enterBtn.style.display = 'inline-flex';
+    }
 
   imageSrcs.forEach(src => {
     const img = new Image();
     img.onload  = onProgress;
-    img.onerror = onProgress; // count missing images too
+    img.onerror = onProgress;
     img.src = src;
   });
 
-  // Safety fallback — dismiss after 8s no matter what
-  setTimeout(dismiss, 8000);
-
-  // Tap on loading screen counts as user interaction for autoplay
-  screen.addEventListener('click', tryAutoPlay, { once: true });
+  // Safety: show button after 8s
+  setTimeout(showEnterButton, 8000);
 })();
 
-// ═══ MUSIC PLAYER ═══
-const audio     = document.getElementById('bg-music');
-const btn       = document.getElementById('music-btn');
-const iconMute  = document.getElementById('music-icon-mute');
-const iconPlay  = document.getElementById('music-icon-play');
-const waves     = document.getElementById('music-waves');
-let playing = false;
+// ─── enterSite: called directly by onclick — guaranteed trusted gesture ───
+function enterSite() {
+  const audio  = document.getElementById('bg-music');
+  const screen = document.getElementById('loading-screen');
 
-function tryAutoPlay() {
-  if (playing) return;
+  // This runs inside a direct onclick handler = trusted user gesture
+  // Browsers WILL allow audio.play() here
   audio.volume = 0.35;
-  audio.play().then(() => {
-    playing = true;
-    showPlayingState();
-  }).catch(() => {});
+  audio.play().catch(function(){});
+
+  screen.classList.add('hidden');
 }
 
-// Start music on the very first interaction anywhere on the page
-function onFirstInteraction() {
-  tryAutoPlay();
-  document.removeEventListener('touchstart', onFirstInteraction);
-  document.removeEventListener('mousedown', onFirstInteraction);
-  document.removeEventListener('keydown', onFirstInteraction);
-  document.removeEventListener('scroll', onFirstInteraction);
-}
-document.addEventListener('touchstart', onFirstInteraction, { once: true, passive: true });
-document.addEventListener('mousedown', onFirstInteraction, { once: true });
-document.addEventListener('keydown',   onFirstInteraction, { once: true });
-document.addEventListener('scroll',    onFirstInteraction, { once: true, passive: true });
+// ═══ MUSIC PLAYER (mute button) ═══
+const audio    = document.getElementById('bg-music');
+const btn      = document.getElementById('music-btn');
+const iconMute = document.getElementById('music-icon-mute');
+const iconPlay = document.getElementById('music-icon-play');
+const waves    = document.getElementById('music-waves');
 
 function showPlayingState() {
   iconMute.style.display = 'none';
   iconPlay.style.display = 'none';
   waves.style.display    = 'flex';
-}
-function showPausedState() {
-  iconMute.style.display = 'none';
-  iconPlay.style.display = 'block';
-  waves.style.display    = 'none';
 }
 function showMutedState() {
   iconMute.style.display = 'block';
@@ -1526,20 +1720,18 @@ function showMutedState() {
   waves.style.display    = 'none';
 }
 
-// Button is now a MUTE toggle — music plays by default
+audio.addEventListener('play',  showPlayingState);
+audio.addEventListener('pause', showMutedState);
+
 btn.addEventListener('click', () => {
-  if (playing) {
+  if (!audio.paused) {
     audio.pause();
-    playing = false;
-    showMutedState();
   } else {
     audio.volume = 0.35;
-    audio.play().then(() => {
-      playing = true;
-      showPlayingState();
-    });
+    audio.play().catch(() => {});
   }
 });
+
 </script>
 
 </body>

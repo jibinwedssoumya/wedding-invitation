@@ -8,13 +8,10 @@
 <meta property="og:image" content="https://jibinwedssoumya.github.io/wedding-invitation/assets/thumbnails/thumbnail-compressed.jpeg?v=4">
 <meta property="og:url" content="https://jibinwedssoumya.github.io/wedding-invitation/">
 <meta property="og:type" content="website">
-
 <meta property="og:url" content="https://jibinwedssoumya.github.io/wedding-invitation/">
 <link rel="canonical" href="https://jibinwedssoumya.github.io/wedding-invitation/">
-
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Jibin & Soumya — Wedding 2026">
 <meta name="twitter:description" content="Join us for our special day ❤️">
@@ -39,7 +36,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+/* NO smooth scrolling - removed html { scroll-behavior: smooth } */
 
 body {
   font-family: 'Josefin Sans', sans-serif;
@@ -49,7 +46,7 @@ body {
   cursor: default;
 }
 
-/* ─── NOISE TEXTURE OVERLAY ─── */
+/* Noise texture - lighter opacity for performance */
 body::before {
   content: '';
   position: fixed;
@@ -57,15 +54,15 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.4;
+  opacity: 0.3;
+  will-change: auto;
 }
 
-/* ─── CUSTOM SCROLLBAR ─── */
+/* Custom scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--cream); }
 ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
 
-/* ─── SECTION BASE ─── */
 section {
   position: relative;
   min-height: 100vh;
@@ -75,7 +72,7 @@ section {
   overflow: hidden;
 }
 
-/* ─── SCROLL INDICATOR ─── */
+/* Scroll indicator */
 .scroll-hint {
   position: absolute;
   bottom: 40px;
@@ -105,7 +102,7 @@ section {
   50% { opacity: 1; transform: translateX(-50%) translateY(8px); }
 }
 
-/* ─── FLOATING PARTICLES ─── */
+/* Particles - reduced count, no will-change */
 .particles {
   position: fixed;
   inset: 0;
@@ -129,16 +126,13 @@ section {
   100% { opacity: 0; transform: translateY(-20vh) translateX(var(--drift, 50px)) scale(1.5); }
 }
 
-/* ════════════════════════════════════════════
-   SECTION 1: HERO
-════════════════════════════════════════════ */
+/* ═══ HERO ═══ */
 #hero {
   background: linear-gradient(160deg, #fdfaf3 0%, #f8eed8 40%, #fdf6e9 100%);
   flex-direction: column;
   text-align: center;
   padding: 80px 20px;
 }
-
 .hero-bg-circle {
   position: absolute;
   border-radius: 50%;
@@ -160,7 +154,6 @@ section {
   opacity: 0;
   animation: fadeUp 1s 0.3s forwards;
 }
-
 .hero-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(48px, 8vw, 100px);
@@ -172,17 +165,8 @@ section {
   position: relative;
   z-index: 2;
 }
-.hero-title em {
-  font-style: italic;
-  color: var(--gold-dark);
-  display: block;
-}
-.hero-ampersand {
-  font-size: 0.6em;
-  color: var(--gold);
-  vertical-align: middle;
-  margin: 0 10px;
-}
+.hero-title em { font-style: italic; color: var(--gold-dark); display: block; }
+.hero-ampersand { font-size: 0.6em; color: var(--gold); vertical-align: middle; margin: 0 10px; }
 
 .hero-divider {
   display: flex;
@@ -208,7 +192,7 @@ section {
   animation: fadeUp 1s 1.1s forwards;
 }
 
-/* ─── FLIP CARD ─── */
+/* Flip Card */
 .flip-card-scene {
   perspective: 1200px;
   width: var(--card-w);
@@ -219,7 +203,6 @@ section {
   position: relative;
   z-index: 5;
 }
-
 .flip-card {
   width: 100%;
   height: 100%;
@@ -228,11 +211,7 @@ section {
   transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
-
-.flip-card.flipped {
-  transform: rotateY(-180deg);
-}
-
+.flip-card.flipped { transform: rotateY(-180deg); }
 .flip-card-front,
 .flip-card-back {
   position: absolute;
@@ -243,20 +222,8 @@ section {
   overflow: hidden;
   box-shadow: 0 30px 80px rgba(100,70,30,0.2), 0 10px 30px rgba(100,70,30,0.1);
 }
-
-.flip-card-back {
-  transform: rotateY(180deg);
-}
-
-.flip-card-front img,
-.flip-card-back img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Overlay for front card */
+.flip-card-back { transform: rotateY(180deg); }
+.flip-card-front img, .flip-card-back img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .card-overlay {
   position: absolute;
   inset: 0;
@@ -266,24 +233,8 @@ section {
   justify-content: flex-end;
   padding: 30px;
 }
-.card-overlay-text {
-  color: white;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px;
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.4;
-}
-.card-overlay-date {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
-  letter-spacing: 4px;
-  color: var(--gold-light);
-  margin-top: 6px;
-  text-transform: uppercase;
-}
-
-/* Flip hint */
+.card-overlay-text { color: white; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; font-style: italic; line-height: 1.4; }
+.card-overlay-date { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 4px; color: var(--gold-light); margin-top: 6px; text-transform: uppercase; }
 .flip-hint {
   position: absolute;
   bottom: -40px;
@@ -297,12 +248,8 @@ section {
   animation: flipHintPulse 3s infinite;
 }
 .flip-hint::before { content: '↻ '; }
-@keyframes flipHintPulse {
-  0%,100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
+@keyframes flipHintPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-/* Fallback card face (when no real images) */
 .card-face-placeholder {
   width: 100%;
   height: 100%;
@@ -313,91 +260,29 @@ section {
   gap: 16px;
   padding: 30px;
 }
-.card-face-front-bg {
-  background: linear-gradient(145deg, #fdf3e3, #f0dbb5, #e8c98a);
-}
-.card-face-back-bg {
-  background: linear-gradient(145deg, #f5e8d0, #ead4a8, #d4a96a);
-}
+.card-face-front-bg { background: linear-gradient(145deg, #fdf3e3, #f0dbb5, #e8c98a); }
+.card-face-back-bg { background: linear-gradient(145deg, #f5e8d0, #ead4a8, #d4a96a); }
 .card-face-icon { font-size: 48px; }
-.card-face-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 28px;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--text-dark);
-  text-align: center;
-}
-.card-face-names {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
-  color: var(--gold-dark);
-  text-align: center;
-  line-height: 1.6;
-}
+.card-face-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; font-style: italic; color: var(--text-dark); text-align: center; }
+.card-face-names { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--gold-dark); text-align: center; line-height: 1.6; }
 .card-face-divider { width: 60px; height: 1px; background: var(--gold); }
-.card-face-date {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
-  letter-spacing: 3px;
-  color: var(--text-light);
-  text-align: center;
-}
+.card-face-date { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 3px; color: var(--text-light); text-align: center; }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ════════════════════════════════════════════
-   SECTION 2: INVITATION
-════════════════════════════════════════════ */
+/* ═══ INVITATION ═══ */
 #invitation {
   background: linear-gradient(170deg, #f8eed8 0%, var(--ivory) 50%, #fdf3e4 100%);
   padding: 100px 20px;
 }
-
-.invitation-inner {
-  max-width: 800px;
-  text-align: center;
-  position: relative;
-  z-index: 2;
-}
-
-.section-label {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
-  font-weight: 300;
-  letter-spacing: 7px;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-
-.invitation-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(36px, 5vw, 64px);
-  font-weight: 300;
-  color: var(--text-dark);
-  margin-bottom: 16px;
-}
-
-.invitation-subtitle {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 13px;
-  letter-spacing: 3px;
-  color: var(--text-light);
-  margin-bottom: 60px;
-  text-transform: uppercase;
-}
-
-/* Event card - single */
-.event-cards {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 50px;
-}
-
+.invitation-inner { max-width: 800px; text-align: center; position: relative; z-index: 2; }
+.section-label { font-family: 'Josefin Sans', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 7px; color: var(--gold); text-transform: uppercase; margin-bottom: 20px; }
+.invitation-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 64px); font-weight: 300; color: var(--text-dark); margin-bottom: 16px; }
+.invitation-subtitle { font-family: 'Josefin Sans', sans-serif; font-size: 13px; letter-spacing: 3px; color: var(--text-light); margin-bottom: 60px; text-transform: uppercase; }
+.event-cards { display: flex; justify-content: center; margin-bottom: 50px; }
 .event-card {
   background: white;
   border: 1px solid rgba(201,160,96,0.2);
@@ -410,41 +295,12 @@ section {
   max-width: 360px;
   width: 100%;
 }
-.event-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(100,70,30,0.12);
-}
-.event-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-
+.event-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(100,70,30,0.12); }
+.event-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 .event-icon { font-size: 36px; margin-bottom: 16px; display: block; }
-.event-type {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 9px;
-  letter-spacing: 5px;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.event-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 26px;
-  font-weight: 400;
-  color: var(--text-dark);
-  margin-bottom: 20px;
-}
-.event-detail {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 11px;
-  color: var(--text-mid);
-  line-height: 2;
-  letter-spacing: 1px;
-}
+.event-type { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+.event-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--text-dark); margin-bottom: 20px; }
+.event-detail { font-family: 'Josefin Sans', sans-serif; font-size: 11px; color: var(--text-mid); line-height: 2; letter-spacing: 1px; }
 .event-detail strong { color: var(--text-dark); font-weight: 400; }
 
 .download-btn {
@@ -466,35 +322,17 @@ section {
   position: relative;
   overflow: hidden;
 }
-.download-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
-  z-index: -1;
-  border-radius: 50px;
-}
+.download-btn::before { content: ''; position: absolute; inset: 0; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; z-index: -1; border-radius: 50px; }
 .download-btn:hover { color: white; }
 .download-btn:hover::before { transform: scaleX(1); }
 
-/* Decorative corner ornaments */
-.ornament {
-  position: absolute;
-  color: var(--gold-light);
-  font-size: 24px;
-  opacity: 0.4;
-}
+.ornament { position: absolute; color: var(--gold-light); font-size: 24px; opacity: 0.4; }
 .ornament-tl { top: 20px; left: 20px; }
 .ornament-tr { top: 20px; right: 20px; transform: scaleX(-1); }
 .ornament-bl { bottom: 20px; left: 20px; transform: scaleY(-1); }
 .ornament-br { bottom: 20px; right: 20px; transform: scale(-1); }
 
-/* ════════════════════════════════════════════
-   SECTION 3: COUNTDOWN
-════════════════════════════════════════════ */
+/* ═══ COUNTDOWN ═══ */
 #countdown {
   background: linear-gradient(160deg, #2c1e0f 0%, #3d2a12 40%, #2c1e0f 100%);
   color: white;
@@ -503,7 +341,6 @@ section {
   text-align: center;
   position: relative;
 }
-
 #countdown::before {
   content: '';
   position: absolute;
@@ -511,30 +348,9 @@ section {
   background: radial-gradient(ellipse at 30% 50%, rgba(201,160,96,0.1) 0%, transparent 60%),
               radial-gradient(ellipse at 70% 50%, rgba(201,160,96,0.08) 0%, transparent 60%);
 }
-
-.countdown-eyebrow {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
-  letter-spacing: 7px;
-  color: var(--gold-light);
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  position: relative;
-  z-index: 2;
-}
-
-.countdown-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(36px, 5vw, 60px);
-  font-weight: 300;
-  color: white;
-  margin-bottom: 50px;
-  position: relative;
-  z-index: 2;
-}
+.countdown-eyebrow { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 7px; color: var(--gold-light); text-transform: uppercase; margin-bottom: 16px; position: relative; z-index: 2; }
+.countdown-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 60px); font-weight: 300; color: white; margin-bottom: 50px; position: relative; z-index: 2; }
 .countdown-title em { color: var(--gold-light); font-style: italic; }
-
-/* Countdown digits */
 .countdown-display {
   display: flex;
   align-items: center;
@@ -549,12 +365,7 @@ section {
   max-width: 100%;
   box-sizing: border-box;
 }
-
-.count-unit {
-  text-align: center;
-  min-width: 0;
-  flex-shrink: 1;
-}
+.count-unit { text-align: center; min-width: 0; flex-shrink: 1; }
 .count-number {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(42px, 10vw, 120px);
@@ -565,44 +376,15 @@ section {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  transition: all 0.3s ease;
   min-width: 2ch;
   display: block;
 }
-.count-label {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: clamp(7px, 2vw, 9px);
-  letter-spacing: 2px;
-  color: var(--gold-light);
-  text-transform: uppercase;
-  margin-top: 8px;
-}
-.count-separator {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(28px, 6vw, 80px);
-  color: var(--gold);
-  opacity: 0.5;
-  animation: blink 1s infinite;
-  margin-bottom: 20px;
-  flex-shrink: 0;
-}
-@keyframes blink {
-  0%,49%{ opacity:0.5; } 50%,100%{ opacity:0.1; }
-}
+.count-label { font-family: 'Josefin Sans', sans-serif; font-size: clamp(7px, 2vw, 9px); letter-spacing: 2px; color: var(--gold-light); text-transform: uppercase; margin-top: 8px; }
+.count-separator { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 6vw, 80px); color: var(--gold); opacity: 0.5; animation: blink 1s infinite; margin-bottom: 20px; flex-shrink: 0; }
+@keyframes blink { 0%,49%{ opacity:0.5; } 50%,100%{ opacity:0.1; } }
+.countdown-event-label { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 3px; color: rgba(255,255,255,0.5); position: relative; z-index: 2; padding: 0 16px; }
 
-.countdown-event-label {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: rgba(255,255,255,0.5);
-  position: relative;
-  z-index: 2;
-  padding: 0 16px;
-}
-
-/* ════════════════════════════════════════════
-   SECTION 4: PHOTO GALLERY STACK
-════════════════════════════════════════════ */
+/* ═══ GALLERY STACK ═══ */
 #gallery-stack {
   position: relative;
   background: linear-gradient(170deg, var(--ivory) 0%, #f8eed8 50%, var(--ivory) 100%);
@@ -611,7 +393,6 @@ section {
   min-height: auto;
   overflow: hidden;
 }
-
 #gallery-stack::before {
   content: "";
   position: absolute;
@@ -624,23 +405,10 @@ section {
   pointer-events: none;
   z-index: 0;
 }
-
-.gallery-header {
-  text-align: center;
-  margin-bottom: 34px;
-  position: relative;
-  z-index: 2;
-}
-
-.gallery-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(36px, 5vw, 64px);
-  font-weight: 300;
-  color: var(--text-dark);
-}
+.gallery-header { text-align: center; margin-bottom: 34px; position: relative; z-index: 2; }
+.gallery-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 64px); font-weight: 300; color: var(--text-dark); }
 .gallery-title em { font-style: italic; color: var(--gold-dark); }
 
-/* True 3D photo stack */
 .photo-stack-container {
   position: relative;
   width: min(95vw, 980px);
@@ -651,26 +419,17 @@ section {
   padding: 8px 0 0;
   z-index: 1;
 }
-
 .photo-frame {
   position: absolute;
   width: min(38vw, 280px);
   aspect-ratio: 3 / 4;
   opacity: 0.35;
   transform: translate3d(0, 0, -60px) rotateY(18deg) scale(0.92);
-  transition: transform 0.45s ease, opacity 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+  /* Removed transition for perf - only animate on hover */
   cursor: pointer;
-  will-change: transform;
-  filter: saturate(0.92);
+  /* No will-change */
 }
-.photo-frame.visible {
-  opacity: 1;
-}
-.photo-frame:hover {
-  box-shadow: 0 28px 60px rgba(0,0,0,0.2);
-  filter: saturate(1.05);
-}
-
+.photo-frame:hover { box-shadow: 0 28px 60px rgba(0,0,0,0.2); }
 .photo-frame-inner {
   width: 100%;
   height: 100%;
@@ -681,84 +440,27 @@ section {
   display: flex;
   flex-direction: column;
 }
-
-.photo-img {
-  flex: 1;
-  border-radius: 2px;
-  overflow: hidden;
-  background: var(--cream);
-}
-.photo-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
-}
-.photo-frame:hover .photo-img img { transform: scale(1.05); }
-
-/* Placeholder photo content */
-.photo-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: linear-gradient(145deg, var(--cream), var(--blush));
-}
+.photo-img { flex: 1; border-radius: 2px; overflow: hidden; background: var(--cream); }
+.photo-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(145deg, var(--cream), var(--blush)); }
 .photo-placeholder-icon { font-size: 32px; opacity: 0.5; }
-.photo-placeholder-text {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 14px;
-  color: var(--text-light);
-  font-style: italic;
-}
-
-.photo-caption {
-  margin-top: 8px;
-  text-align: center;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 13px;
-  font-style: italic;
-  color: var(--text-light);
-}
+.photo-placeholder-text { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: var(--text-light); font-style: italic; }
+.photo-caption { margin-top: 8px; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic; color: var(--text-light); }
 
 @media (max-width: 768px) {
-  #gallery-stack {
-    padding: 28px 10px 24px;
-  }
-  .photo-stack-container {
-    width: min(96vw, 470px);
-    height: 980px;
-  }
-  .photo-frame {
-    width: min(44vw, 200px);
-  }
+  #gallery-stack { padding: 28px 10px 24px; }
+  .photo-stack-container { width: min(96vw, 470px); height: 980px; }
+  .photo-frame { width: min(44vw, 200px); }
 }
 
-/* ════════════════════════════════════════════
-   SECTION 5: CELEBRATIONS
-════════════════════════════════════════════ */
+/* ═══ CELEBRATIONS ═══ */
 #celebrations {
   background: var(--ivory);
   padding: 120px 20px;
   flex-direction: column;
 }
-
-.celebrations-header {
-  text-align: center;
-  margin-bottom: 80px;
-}
-
-.celebrations-grid {
-  display: flex;
-  justify-content: center;
-  max-width: 900px;
-  width: 100%;
-}
-
+.celebrations-header { text-align: center; margin-bottom: 80px; }
+.celebrations-grid { display: flex; justify-content: center; max-width: 900px; width: 100%; }
 .celebration-card {
   background: white;
   border-radius: 24px;
@@ -771,337 +473,95 @@ section {
   max-width: 420px;
   width: 100%;
 }
-.celebration-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 25px 70px rgba(100,70,30,0.14);
-}
-
-.celebration-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  transform: scaleX(0);
-  transition: transform 0.5s ease;
-}
+.celebration-card:hover { transform: translateY(-8px); box-shadow: 0 25px 70px rgba(100,70,30,0.14); }
+.celebration-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); transform: scaleX(0); transition: transform 0.5s ease; }
 .celebration-card:hover::after { transform: scaleX(1); }
-
 .cel-icon { font-size: 40px; display: block; margin-bottom: 16px; }
-.cel-type {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 9px;
-  letter-spacing: 5px;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.cel-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 30px;
-  font-weight: 400;
-  color: var(--text-dark);
-  margin-bottom: 6px;
-}
-.cel-subtitle {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 16px;
-  color: var(--text-light);
-  margin-bottom: 30px;
-}
+.cel-type { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+.cel-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; color: var(--text-dark); margin-bottom: 6px; }
+.cel-subtitle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--text-light); margin-bottom: 30px; }
 .cel-divider { width: 40px; height: 1px; background: var(--gold); margin: 0 auto 24px; }
-.cel-info {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 11px;
-  line-height: 2.2;
-  color: var(--text-mid);
-  letter-spacing: 1px;
-}
+.cel-info { font-family: 'Josefin Sans', sans-serif; font-size: 11px; line-height: 2.2; color: var(--text-mid); letter-spacing: 1px; }
 .cel-info strong { color: var(--text-dark); font-weight: 400; }
-.cel-tagline {
-  margin-top: 24px;
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 14px;
-  color: var(--text-light);
-  line-height: 1.6;
-}
+.cel-tagline { margin-top: 24px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--text-light); line-height: 1.6; }
 
-/* ════════════════════════════════════════════
-   SECTION 7: VENUE
-════════════════════════════════════════════ */
+/* ═══ VENUE ═══ */
 #venue {
   background: linear-gradient(160deg, var(--ivory) 0%, #f0dbb5 100%);
   padding: 120px 20px;
   flex-direction: column;
+  gap: 40px;
 }
-
+.venue-cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1100px;
+}
 .venue-card {
   background: white;
   border-radius: 24px;
-  padding: 60px 50px;
-  max-width: 600px;
+  padding: 50px 40px;
+  max-width: 480px;
   width: 100%;
   box-shadow: 0 20px 60px rgba(100,70,30,0.1);
   text-align: center;
   position: relative;
+  flex: 1 1 340px;
 }
-
-.venue-map-icon {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 36px;
-  margin: 0 auto 30px;
-  animation: venuePulse 2.5s infinite;
-  box-shadow: 0 0 0 0 rgba(201,160,96,0.4);
-}
-@keyframes venuePulse {
-  0% { box-shadow: 0 0 0 0 rgba(201,160,96,0.4); }
-  70% { box-shadow: 0 0 0 20px rgba(201,160,96,0); }
-  100% { box-shadow: 0 0 0 0 rgba(201,160,96,0); }
-}
-
-.venue-event-title {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 9px;
-  letter-spacing: 5px;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.venue-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
-  color: var(--text-dark);
-  margin-bottom: 8px;
-}
-.venue-detail {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 12px;
-  color: var(--text-light);
-  line-height: 2;
-  letter-spacing: 1px;
-}
+.venue-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); border-radius: 24px 24px 0 0; }
+.venue-map-icon { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-light), var(--gold)); display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 30px; animation: venuePulse 2.5s infinite; box-shadow: 0 0 0 0 rgba(201,160,96,0.4); }
+.venue-map-icon.reception-icon { background: linear-gradient(135deg, #e8b4a0, #d4845a); }
+@keyframes venuePulse { 0% { box-shadow: 0 0 0 0 rgba(201,160,96,0.4); } 70% { box-shadow: 0 0 0 20px rgba(201,160,96,0); } 100% { box-shadow: 0 0 0 0 rgba(201,160,96,0); } }
+.venue-event-title { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+.venue-event-title.reception-label { color: #c07050; }
+.venue-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--text-dark); margin-bottom: 8px; }
+.venue-detail { font-family: 'Josefin Sans', sans-serif; font-size: 12px; color: var(--text-light); line-height: 2; letter-spacing: 1px; }
 .venue-divider { width: 50px; height: 1px; background: var(--gold); margin: 24px auto; }
-.venue-directions {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 30px;
-  border: 1px solid var(--gold);
-  border-radius: 50px;
-  color: var(--gold-dark);
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: transparent;
-}
-.venue-directions:hover {
-  background: var(--gold);
-  color: white;
-}
+.venue-directions { display: inline-flex; align-items: center; gap: 10px; padding: 12px 30px; border: 1px solid var(--gold); border-radius: 50px; color: var(--gold-dark); font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: all 0.3s ease; background: transparent; }
+.venue-directions:hover { background: var(--gold); color: white; }
+.venue-directions.reception-dir { border-color: #c07050; color: #8b4a2a; }
+.venue-directions.reception-dir:hover { background: #c07050; color: white; }
 
-/* ════════════════════════════════════════════
-   SECTION 8: LOVE TIMELINE
-════════════════════════════════════════════ */
-#timeline {
-  background: var(--ivory);
-  padding: 120px 20px;
-  flex-direction: column;
-}
-
-.timeline-container {
-  max-width: 700px;
-  width: 100%;
-  position: relative;
-}
-
-.timeline-line {
-  position: absolute;
-  left: 50%;
-  top: 0; bottom: 0;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, var(--gold), var(--gold), transparent);
-  transform: translateX(-50%);
-}
-
-.timeline-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 60px;
-  opacity: 0;
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.timeline-item:nth-child(even) {
-  flex-direction: row-reverse;
-  transform: translateX(40px);
-}
-.timeline-item:nth-child(odd) {
-  transform: translateX(-40px);
-}
-.timeline-item.visible {
-  opacity: 1;
-  transform: translateX(0) !important;
-}
-
-.timeline-content {
-  width: calc(50% - 40px);
-  text-align: right;
-  padding-right: 30px;
-}
-.timeline-item:nth-child(even) .timeline-content {
-  text-align: left;
-  padding-right: 0;
-  padding-left: 30px;
-}
-
-.timeline-year {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 48px;
-  font-weight: 300;
-  color: var(--gold-light);
-  line-height: 1;
-}
-.timeline-desc {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 11px;
-  color: var(--text-mid);
-  letter-spacing: 2px;
-  margin-top: 4px;
-}
-
-.timeline-dot {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--gold);
-  border: 3px solid var(--ivory);
-  box-shadow: 0 0 0 4px rgba(201,160,96,0.2);
-  flex-shrink: 0;
-  z-index: 1;
-  position: relative;
-}
-
+/* ═══ TIMELINE ═══ */
+#timeline { background: var(--ivory); padding: 120px 20px; flex-direction: column; }
+.timeline-container { max-width: 700px; width: 100%; position: relative; }
+.timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold), var(--gold), transparent); transform: translateX(-50%); }
+.timeline-item { display: flex; align-items: center; margin-bottom: 60px; opacity: 0; transition: opacity 0.6s ease, transform 0.6s ease; }
+.timeline-item:nth-child(even) { flex-direction: row-reverse; transform: translateX(40px); }
+.timeline-item:nth-child(odd) { transform: translateX(-40px); }
+.timeline-item.visible { opacity: 1; transform: translateX(0) !important; }
+.timeline-content { width: calc(50% - 40px); text-align: right; padding-right: 30px; }
+.timeline-item:nth-child(even) .timeline-content { text-align: left; padding-right: 0; padding-left: 30px; }
+.timeline-year { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: var(--gold-light); line-height: 1; }
+.timeline-desc { font-family: 'Josefin Sans', sans-serif; font-size: 11px; color: var(--text-mid); letter-spacing: 2px; margin-top: 4px; }
+.timeline-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 3px solid var(--ivory); box-shadow: 0 0 0 4px rgba(201,160,96,0.2); flex-shrink: 0; z-index: 1; position: relative; }
 .timeline-spacer { width: calc(50% - 40px); }
 
-/* ════════════════════════════════════════════
-   SECTION 9: SCRIPTURE / FOOTER
-════════════════════════════════════════════ */
-#scripture {
-  background: linear-gradient(160deg, #2c1e0f 0%, #3d2a12 100%);
-  padding: 120px 20px;
-  flex-direction: column;
-  text-align: center;
-}
-
-.scripture-inner {
-  max-width: 700px;
-  position: relative;
-  z-index: 2;
-}
-
-#scripture::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 50%, rgba(201,160,96,0.08) 0%, transparent 70%);
-}
-
-.scripture-quote-mark {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 120px;
-  color: var(--gold);
-  opacity: 0.2;
-  line-height: 0.5;
-  display: block;
-  margin-bottom: 20px;
-}
-
-.scripture-text {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(18px, 2.5vw, 24px);
-  font-style: italic;
-  font-weight: 300;
-  color: rgba(255,255,255,0.85);
-  line-height: 1.8;
-  margin-bottom: 20px;
-}
-.scripture-ref {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
-  letter-spacing: 4px;
-  color: var(--gold-light);
-  text-transform: uppercase;
-  margin-bottom: 50px;
-}
-
-.scripture-divider {
-  width: 80px;
-  height: 1px;
-  background: rgba(201,160,96,0.4);
-  margin: 0 auto 50px;
-}
-
-.couple-names-footer {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(28px, 4vw, 48px);
-  font-weight: 300;
-  color: white;
-  margin-bottom: 16px;
-}
+/* ═══ SCRIPTURE ═══ */
+#scripture { background: linear-gradient(160deg, #2c1e0f 0%, #3d2a12 100%); padding: 120px 20px; flex-direction: column; text-align: center; }
+.scripture-inner { max-width: 700px; position: relative; z-index: 2; }
+#scripture::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(201,160,96,0.08) 0%, transparent 70%); }
+.scripture-quote-mark { font-family: 'Cormorant Garamond', serif; font-size: 120px; color: var(--gold); opacity: 0.2; line-height: 0.5; display: block; margin-bottom: 20px; }
+.scripture-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(18px, 2.5vw, 24px); font-style: italic; font-weight: 300; color: rgba(255,255,255,0.85); line-height: 1.8; margin-bottom: 20px; }
+.scripture-ref { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 4px; color: var(--gold-light); text-transform: uppercase; margin-bottom: 50px; }
+.scripture-divider { width: 80px; height: 1px; background: rgba(201,160,96,0.4); margin: 0 auto 50px; }
+.couple-names-footer { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 300; color: white; margin-bottom: 16px; }
 .couple-names-footer em { color: var(--gold-light); font-style: italic; }
+.footer-dates { font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 3px; color: rgba(255,255,255,0.4); margin-bottom: 60px; }
+.footer-credit { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.25); }
 
-.footer-dates {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: rgba(255,255,255,0.4);
-  margin-bottom: 60px;
-}
+/* ═══ REVEAL ═══ */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
-.footer-credit {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: rgba(255,255,255,0.25);
-}
+/* ═══ UTILITY ═══ */
+.gold-line { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto; }
+.gold-line-full { width: 200px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 20px auto; }
 
-/* ─── REVEAL ANIMATIONS ─── */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ─── GOLD ORNAMENT LINES ─── */
-.gold-line {
-  width: 60px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 0 auto;
-}
-.gold-line-full {
-  width: 200px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 20px auto;
-}
-
-/* ─── NAV ─── */
+/* ═══ NAV ═══ */
 .floating-nav {
   position: fixed;
   top: 30px;
@@ -1124,260 +584,50 @@ section {
   from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
   to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
-.nav-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--gold-light);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-}
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-light); cursor: pointer; transition: all 0.3s ease; position: relative; }
 .nav-dot:hover, .nav-dot.active { background: var(--gold); transform: scale(1.5); }
-.nav-dot[title]:hover::after {
-  content: attr(title);
-  position: absolute;
-  bottom: -28px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: var(--text-light);
-  white-space: nowrap;
-  background: var(--ivory);
-  padding: 3px 8px;
-  border-radius: 10px;
-  border: 1px solid rgba(201,160,96,0.2);
-}
-.nav-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 14px;
-  font-style: italic;
-  color: var(--gold-dark);
-}
+.nav-dot[title]:hover::after { content: attr(title); position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%); font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 2px; color: var(--text-light); white-space: nowrap; background: var(--ivory); padding: 3px 8px; border-radius: 10px; border: 1px solid rgba(201,160,96,0.2); }
+.nav-name { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-style: italic; color: var(--gold-dark); }
 
-/* ════════════════════════════════════════════
-   LIGHTBOX
-════════════════════════════════════════════ */
-.lightbox-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background: rgba(20, 12, 4, 0.96);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s ease;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-.lightbox-overlay.open {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.lightbox-inner {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  padding: 60px 80px;
-  box-sizing: border-box;
-}
-@media (max-width: 600px) {
-  .lightbox-inner { padding: 60px 16px 80px; }
-}
-
-.lightbox-img-wrap {
-  position: relative;
-  max-width: min(90vw, 560px);
-  max-height: 82vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: scale(0.88);
-  opacity: 0;
-  transition: transform 0.4s cubic-bezier(0.34,1.3,0.64,1), opacity 0.35s ease;
-}
-.lightbox-overlay.open .lightbox-img-wrap {
-  transform: scale(1);
-  opacity: 1;
-}
-
-/* Polaroid frame */
-.lightbox-frame {
-  background: white;
-  padding: 14px 14px 52px;
-  border-radius: 4px;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 10px 30px rgba(0,0,0,0.3);
-  max-width: 100%;
-  max-height: 82vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.lightbox-photo {
-  display: block;
-  max-width: min(82vw, 500px);
-  max-height: 65vh;
-  width: auto;
-  height: auto;
-  border-radius: 2px;
-  object-fit: contain;
-}
-
-/* Placeholder shown when no real image */
-.lightbox-placeholder {
-  width: min(82vw, 380px);
-  height: min(60vh, 480px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  background: linear-gradient(145deg, var(--cream), var(--blush));
-  border-radius: 2px;
-}
+/* ═══ LIGHTBOX ═══ */
+.lightbox-overlay { position: fixed; inset: 0; z-index: 99999; background: rgba(20, 12, 4, 0.96); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.lightbox-overlay.open { opacity: 1; pointer-events: all; }
+.lightbox-inner { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 60px 80px; box-sizing: border-box; }
+@media (max-width: 600px) { .lightbox-inner { padding: 60px 16px 80px; } }
+.lightbox-img-wrap { position: relative; max-width: min(90vw, 560px); max-height: 82vh; display: flex; align-items: center; justify-content: center; transform: scale(0.88); opacity: 0; transition: transform 0.4s cubic-bezier(0.34,1.3,0.64,1), opacity 0.35s ease; }
+.lightbox-overlay.open .lightbox-img-wrap { transform: scale(1); opacity: 1; }
+.lightbox-frame { background: white; padding: 14px 14px 52px; border-radius: 4px; box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 10px 30px rgba(0,0,0,0.3); max-width: 100%; max-height: 82vh; display: flex; flex-direction: column; align-items: center; }
+.lightbox-photo { display: block; max-width: min(82vw, 500px); max-height: 65vh; width: auto; height: auto; border-radius: 2px; object-fit: contain; }
+.lightbox-placeholder { width: min(82vw, 380px); height: min(60vh, 480px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(145deg, var(--cream), var(--blush)); border-radius: 2px; }
 .lightbox-placeholder-icon { font-size: 52px; opacity: 0.5; }
-.lightbox-placeholder-text {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
-  color: var(--text-light);
-  font-style: italic;
-}
-
-.lightbox-caption {
-  margin-top: 10px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 15px;
-  font-style: italic;
-  color: var(--text-mid);
-  text-align: center;
-  letter-spacing: 1px;
-}
-
-/* Close button */
-.lightbox-close {
-  position: absolute;
-  top: 20px;
-  right: 24px;
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(201,160,96,0.4);
-  border-radius: 50%;
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.8);
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.25s ease;
-  z-index: 10;
-  line-height: 1;
-}
-.lightbox-close:hover {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: white;
-  transform: rotate(90deg);
-}
-
-/* Prev / Next arrows */
-.lightbox-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
-  border: 1px solid rgba(201,160,96,0.35);
-  border-radius: 50%;
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.75);
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.25s ease;
-  z-index: 10;
-  flex-shrink: 0;
-}
-.lightbox-arrow:hover {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: white;
-}
+.lightbox-placeholder-text { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--text-light); font-style: italic; }
+.lightbox-caption { margin-top: 10px; font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic; color: var(--text-mid); text-align: center; letter-spacing: 1px; }
+.lightbox-close { position: absolute; top: 20px; right: 24px; width: 44px; height: 44px; border: 1px solid rgba(201,160,96,0.4); border-radius: 50%; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.8); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.25s ease; z-index: 10; line-height: 1; }
+.lightbox-close:hover { background: var(--gold); border-color: var(--gold); color: white; transform: rotate(90deg); }
+.lightbox-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border: 1px solid rgba(201,160,96,0.35); border-radius: 50%; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.25s ease; z-index: 10; flex-shrink: 0; }
+.lightbox-arrow:hover { background: var(--gold); border-color: var(--gold); color: white; }
 .lightbox-prev { left: 16px; }
 .lightbox-next { right: 16px; }
-@media (max-width: 600px) {
-  .lightbox-prev { left: 6px; }
-  .lightbox-next { right: 6px; }
-  .lightbox-arrow { width: 38px; height: 38px; font-size: 16px; }
-}
-
-/* Counter */
-.lightbox-counter {
-  position: absolute;
-  bottom: 22px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
-  letter-spacing: 4px;
-  color: rgba(255,255,255,0.35);
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-/* Dots indicator */
-.lightbox-dots {
-  position: absolute;
-  bottom: 42px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 7px;
-}
-.lightbox-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-.lightbox-dot.active {
-  background: var(--gold);
-  transform: scale(1.3);
-}
-
-/* Gold ornament lines in lightbox */
-.lightbox-gold-line {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(201,160,96,0.5), transparent);
-}
-
-/* Photo frame cursor hint */
+@media (max-width: 600px) { .lightbox-prev { left: 6px; } .lightbox-next { right: 6px; } .lightbox-arrow { width: 38px; height: 38px; font-size: 16px; } }
+.lightbox-counter { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 4px; color: rgba(255,255,255,0.35); text-transform: uppercase; white-space: nowrap; }
+.lightbox-dots { position: absolute; bottom: 42px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; }
+.lightbox-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); transition: all 0.3s ease; cursor: pointer; }
+.lightbox-dot.active { background: var(--gold); transform: scale(1.3); }
+.lightbox-gold-line { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(201,160,96,0.5), transparent); }
 .photo-frame { cursor: zoom-in; }
 </style>
+
+<!-- Google Fonts loaded async for performance -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@200;300;400&display=swap">
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     LIGHTBOX
-══════════════════════════════════════════ -->
+<!-- LIGHTBOX -->
 <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
   <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
   <button class="lightbox-arrow lightbox-prev" id="lightboxPrev" aria-label="Previous photo">‹</button>
-
   <div class="lightbox-inner">
     <div class="lightbox-img-wrap">
       <div class="lightbox-frame">
@@ -1387,14 +637,12 @@ section {
       <div class="lightbox-gold-line"></div>
     </div>
   </div>
-
   <button class="lightbox-arrow lightbox-next" id="lightboxNext" aria-label="Next photo">›</button>
-
   <div class="lightbox-dots" id="lightboxDots"></div>
   <div class="lightbox-counter" id="lightboxCounter"></div>
 </div>
 
-<!-- Floating particles -->
+<!-- Particles - reduced to 12 for performance -->
 <div class="particles" id="particles"></div>
 
 <!-- Navigation -->
@@ -1408,52 +656,37 @@ section {
   <div class="nav-dot" title="Timeline" onclick="scrollToSection('timeline')"></div>
 </nav>
 
-<!-- ══════════════════════════════════════════
-     SECTION 1: HERO
-══════════════════════════════════════════ -->
+<!-- SECTION 1: HERO -->
 <section id="hero">
   <div class="hero-bg-circle"></div>
   <div class="hero-bg-circle"></div>
   <div class="hero-bg-circle"></div>
-
   <p class="hero-eyebrow">With Joy We Invite You</p>
-
   <h1 class="hero-title">
     <em>Jibin</em>
     <span class="hero-ampersand">&</span>
     <em>Soumya</em>
   </h1>
-
   <div class="hero-divider">
     <div class="hero-divider-line"></div>
     <span class="hero-divider-icon">💒</span>
     <div class="hero-divider-line"></div>
   </div>
-
   <p class="hero-sub">Two Hearts · One Journey · Forever Begins</p>
-
-  <!-- Flip Card -->
   <div class="flip-card-scene">
     <div class="flip-card" id="mainCard">
-      <div class="flip-card-front">
-        <div id="cardFront"></div>
-      </div>
-      <div class="flip-card-back">
-        <div id="cardBack"></div>
-      </div>
+      <div class="flip-card-front"><div id="cardFront"></div></div>
+      <div class="flip-card-back"><div id="cardBack"></div></div>
     </div>
     <span class="flip-hint">Scroll to reveal</span>
   </div>
-
   <div class="scroll-hint">
     <span>Scroll</span>
     <div class="scroll-line"></div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SECTION 2: INVITATION
-══════════════════════════════════════════ -->
+<!-- SECTION 2: INVITATION -->
 <section id="invitation">
   <div style="position:absolute;inset:0;pointer-events:none">
     <div class="ornament ornament-tl">✦</div>
@@ -1461,13 +694,11 @@ section {
     <div class="ornament ornament-bl">✦</div>
     <div class="ornament ornament-br">✦</div>
   </div>
-
   <div class="invitation-inner">
     <p class="section-label reveal">Wedding Invitation</p>
     <h2 class="invitation-title reveal">Join Us for Our<br><em style="font-style:italic;color:var(--gold-dark)">Wedding</em></h2>
     <div class="gold-line-full reveal"></div>
     <p class="invitation-subtitle reveal" style="margin-top:20px;">St Marys Church, Angelvalley</p>
-
     <div class="event-cards reveal">
       <div class="event-card">
         <span class="event-icon">💒</span>
@@ -1481,22 +712,16 @@ section {
         </div>
       </div>
     </div>
-
     <div class="reveal">
-      <a href="#" class="download-btn" onclick="downloadInvitation(event)">
-        ⬇ Download Invitation
-      </a>
+      <a href="#" class="download-btn" onclick="downloadInvitation(event)">⬇ Download Invitation</a>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SECTION 3: COUNTDOWN
-══════════════════════════════════════════ -->
+<!-- SECTION 3: COUNTDOWN -->
 <section id="countdown">
   <p class="countdown-eyebrow reveal">Time Is Ticking</p>
   <h2 class="countdown-title reveal">Counting Down <em>With Joy</em></h2>
-
   <div class="countdown-display reveal">
     <div class="count-unit">
       <span class="count-number" id="cd-days">00</span>
@@ -1518,35 +743,26 @@ section {
       <span class="count-label">Seconds</span>
     </div>
   </div>
-
   <p class="countdown-event-label reveal" id="cd-label">Saturday, 16th May 2026 — Wedding at 10:30 AM</p>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SECTION 4: PHOTO STACK GALLERY
-══════════════════════════════════════════ -->
+<!-- SECTION 4: PHOTO STACK GALLERY -->
 <section id="gallery-stack">
   <div class="gallery-header">
     <p class="section-label reveal">Featured Moments</p>
     <h2 class="gallery-title reveal"><em>Photo Gallery</em></h2>
     <div class="gold-line reveal" style="margin-top:20px;"></div>
   </div>
-
-  <div class="photo-stack-container" id="photoStack">
-    <!-- Generated by JS -->
-  </div>
+  <div class="photo-stack-container" id="photoStack"></div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SECTION 5: CELEBRATIONS
-══════════════════════════════════════════ -->
+<!-- SECTION 5: CELEBRATIONS -->
 <section id="celebrations">
   <div class="celebrations-header">
     <p class="section-label reveal">Save the Date</p>
     <h2 class="invitation-title reveal">Our <em style="font-style:italic;color:var(--gold-dark)">Celebration</em></h2>
     <div class="gold-line-full reveal"></div>
   </div>
-
   <div class="celebrations-grid reveal">
     <div class="celebration-card">
       <span class="cel-icon">💒</span>
@@ -1563,174 +779,142 @@ section {
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SECTION 7: VENUE
-══════════════════════════════════════════ -->
+<!-- SECTION 7: VENUE (Wedding + Reception) -->
 <section id="venue">
-  <div class="gallery-header" style="margin-bottom:0;">
+  <div class="gallery-header" style="margin-bottom:0;width:100%;text-align:center;">
     <p class="section-label reveal">Find Us</p>
     <h2 class="gallery-title reveal">Venue &amp; <em>Directions</em></h2>
     <div class="gold-line reveal" style="margin-top:20px;margin-bottom:40px;"></div>
   </div>
 
-  <div class="venue-card reveal" id="venueCard">
-    <div class="venue-map-icon">💒</div>
-    <p class="venue-event-title">Wedding Ceremony</p>
-    <h3 class="venue-name">St Marys Church</h3>
-    <div class="venue-divider"></div>
-    <div class="venue-detail">
-      <strong>Event:</strong> Wedding Ceremony<br>
-      <strong>Date:</strong> Saturday, 16 May 2026<br>
-      <strong>Location:</strong> St Marys Church, Angelvalley
+  <div class="venue-cards-row">
+    <!-- Wedding Venue -->
+    <div class="venue-card reveal">
+      <div class="venue-map-icon">💒</div>
+      <p class="venue-event-title">Wedding Ceremony</p>
+      <h3 class="venue-name">St Marys Church</h3>
+      <div class="venue-divider"></div>
+      <div class="venue-detail">
+        <strong>Event:</strong> Wedding Ceremony<br>
+        <strong>Date:</strong> Saturday, 16 May 2026<br>
+        <strong>Time:</strong> 10:30 AM<br>
+        <strong>Location:</strong> St Marys Church, Angelvalley
+      </div>
+      <div class="venue-divider"></div>
+      <a href="https://maps.google.com/?q=St+Marys+Church+Angelvalley" target="_blank" class="venue-directions">
+        ↗ Get Directions
+      </a>
     </div>
-    <div class="venue-divider"></div>
-    <a href="https://maps.google.com/?q=St+Marys+Church+Angelvalley" target="_blank" class="venue-directions">
-      ↗ Get Directions
-    </a>
+
+    <!-- Reception Venue -->
+    <div class="venue-card reveal">
+      <div class="venue-map-icon reception-icon">🍽️</div>
+      <p class="venue-event-title reception-label">Reception</p>
+      <h3 class="venue-name">St Thomas Mar Thoma Parish Hall</h3>
+      <div class="venue-divider"></div>
+      <div class="venue-detail">
+        <strong>Event:</strong> Wedding Reception<br>
+        <strong>Date:</strong> Saturday, 16 May 2026<br>
+        <strong>Location:</strong> Thulapally
+      </div>
+      <div class="venue-divider"></div>
+      <a href="https://maps.app.goo.gl/rsh3T6jvv9w7bb6y8" target="_blank" class="venue-directions reception-dir">
+        ↗ Get Directions
+      </a>
+    </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SECTION 8: LOVE TIMELINE
-══════════════════════════════════════════ -->
+<!-- SECTION 8: LOVE TIMELINE -->
 <section id="timeline">
   <div class="gallery-header">
     <p class="section-label reveal">Our Journey</p>
     <h2 class="gallery-title reveal">Love Journey <em>2015 - 2026</em></h2>
     <div class="gold-line reveal" style="margin-top:20px;"></div>
   </div>
-
   <div class="timeline-container" style="margin-top:60px;">
     <div class="timeline-line"></div>
-
     <div class="timeline-item" data-year="2015">
-      <div class="timeline-content">
-        <div class="timeline-year">2015</div>
-        <div class="timeline-desc">A Beautiful Beginning</div>
-      </div>
+      <div class="timeline-content"><div class="timeline-year">2015</div><div class="timeline-desc">A Beautiful Beginning</div></div>
       <div class="timeline-dot"></div>
       <div class="timeline-spacer"></div>
     </div>
-
     <div class="timeline-item" data-year="2017">
       <div class="timeline-spacer"></div>
       <div class="timeline-dot"></div>
-      <div class="timeline-content">
-        <div class="timeline-year">2017</div>
-        <div class="timeline-desc">Growing In Faith & Love</div>
-      </div>
+      <div class="timeline-content"><div class="timeline-year">2017</div><div class="timeline-desc">Growing In Faith & Love</div></div>
     </div>
-
     <div class="timeline-item" data-year="2019">
-      <div class="timeline-content">
-        <div class="timeline-year">2019</div>
-        <div class="timeline-desc">Prayers & Trust</div>
-      </div>
+      <div class="timeline-content"><div class="timeline-year">2019</div><div class="timeline-desc">Prayers & Trust</div></div>
       <div class="timeline-dot"></div>
       <div class="timeline-spacer"></div>
     </div>
-
     <div class="timeline-item" data-year="2021">
       <div class="timeline-spacer"></div>
       <div class="timeline-dot"></div>
-      <div class="timeline-content">
-        <div class="timeline-year">2021</div>
-        <div class="timeline-desc">Deeper Connection</div>
-      </div>
+      <div class="timeline-content"><div class="timeline-year">2021</div><div class="timeline-desc">Deeper Connection</div></div>
     </div>
-
     <div class="timeline-item" data-year="2024">
-      <div class="timeline-content">
-        <div class="timeline-year">2024</div>
-        <div class="timeline-desc">Promise & Commitment</div>
-      </div>
+      <div class="timeline-content"><div class="timeline-year">2024</div><div class="timeline-desc">Promise & Commitment</div></div>
       <div class="timeline-dot"></div>
       <div class="timeline-spacer"></div>
     </div>
-
     <div class="timeline-item" data-year="2026">
       <div class="timeline-spacer"></div>
       <div class="timeline-dot" style="background:var(--gold);box-shadow:0 0 0 6px rgba(201,160,96,0.3);width:18px;height:18px;"></div>
-      <div class="timeline-content">
-        <div class="timeline-year" style="color:var(--gold);">2026</div>
-        <div class="timeline-desc">Holy Matrimony 💒</div>
-      </div>
+      <div class="timeline-content"><div class="timeline-year" style="color:var(--gold);">2026</div><div class="timeline-desc">Holy Matrimony 💒</div></div>
     </div>
   </div>
-
   <p class="reveal" style="font-family:'Cormorant Garamond';font-style:italic;font-size:18px;color:var(--text-light);text-align:center;max-width:500px;margin-top:60px;line-height:1.8;">
     From a beautiful beginning in 2015, through years of prayers, trust, and growing love, their journey reaches holy matrimony in 2026.
   </p>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SECTION 9: SCRIPTURE & FOOTER
-══════════════════════════════════════════ -->
+<!-- SECTION 9: SCRIPTURE & FOOTER -->
 <section id="scripture">
   <div class="scripture-inner">
     <span class="scripture-quote-mark">"</span>
-
-    <p class="scripture-text reveal">
-      Two are better than one... if either of them falls down, one can help the other up.
-    </p>
+    <p class="scripture-text reveal">Two are better than one... if either of them falls down, one can help the other up.</p>
     <p class="scripture-ref reveal">— Ecclesiastes 4:9</p>
-
     <div class="scripture-divider reveal"></div>
-
-    <p class="scripture-text reveal" style="font-size:clamp(16px,2vw,20px);">
-      Love is patient, love is kind. It always protects, always trusts, always hopes, always perseveres.
-    </p>
+    <p class="scripture-text reveal" style="font-size:clamp(16px,2vw,20px);">Love is patient, love is kind. It always protects, always trusts, always hopes, always perseveres.</p>
     <p class="scripture-ref reveal">— 1 Corinthians 13</p>
-
     <div class="scripture-divider reveal"></div>
-
-    <p class="scripture-text reveal" style="font-size:clamp(18px,2.5vw,26px);">
-      I have found the one whom my soul loves.
-    </p>
+    <p class="scripture-text reveal" style="font-size:clamp(18px,2.5vw,26px);">I have found the one whom my soul loves.</p>
     <p class="scripture-ref reveal">— Song of Solomon 3:4</p>
-
     <div style="height:60px;"></div>
-
-    <div class="couple-names-footer reveal">
-      <em>Jibin</em> & <em>Soumya</em>
-    </div>
+    <div class="couple-names-footer reveal"><em>Jibin</em> & <em>Soumya</em></div>
     <p class="footer-dates reveal">Wedding · May 16, 2026</p>
-
     <div class="scripture-divider reveal" style="margin-top:50px;"></div>
-
     <p class="footer-credit">Made with ❤️ for Jibin &amp; Soumya</p>
   </div>
 </section>
 
 <script>
-// ─── PARTICLES ───────────────────────────────────────
+// ─── PARTICLES - reduced to 12 ───
 const particleContainer = document.getElementById('particles');
-for (let i = 0; i < 25; i++) {
+const frag = document.createDocumentFragment();
+for (let i = 0; i < 12; i++) {
   const p = document.createElement('div');
   p.className = 'particle';
-  p.style.cssText = `
-    left: ${Math.random() * 100}%;
-    --dur: ${6 + Math.random() * 10}s;
-    --delay: ${Math.random() * 10}s;
-    --drift: ${-80 + Math.random() * 160}px;
-    width: ${2 + Math.random() * 3}px;
-    height: ${2 + Math.random() * 3}px;
-  `;
-  particleContainer.appendChild(p);
+  p.style.cssText = `left:${Math.random()*100}%;--dur:${7+Math.random()*9}s;--delay:${Math.random()*12}s;--drift:${-70+Math.random()*140}px;width:${2+Math.random()*2}px;height:${2+Math.random()*2}px;`;
+  frag.appendChild(p);
 }
+particleContainer.appendChild(frag);
 
-// ─── CARD SETUP ──────────────────────────────────────
+// ─── CARD SETUP ───
 function setupCards() {
   const front = document.getElementById('cardFront');
   const back = document.getElementById('cardBack');
-  
+
   const frontImg = new Image();
   frontImg.onload = () => {
-    front.innerHTML = '';
     front.style.cssText = 'width:100%;height:100%;position:relative;';
     const img = document.createElement('img');
     img.src = 'assets/bride-and-groom/bride-and-groom-card-1.jpg';
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:20px;';
+    img.loading = 'lazy';
+    img.decoding = 'async';
     const overlay = document.createElement('div');
     overlay.className = 'card-overlay';
     overlay.innerHTML = `<p class="card-overlay-text">Jibin & Soumya</p><p class="card-overlay-date">Save the Date · May 2026</p>`;
@@ -1739,24 +923,18 @@ function setupCards() {
   };
   frontImg.onerror = () => {
     front.className = 'card-face-placeholder card-face-front-bg';
-    front.innerHTML = `
-      <div class="card-face-icon">💒</div>
-      <h3 class="card-face-title">Save the Date</h3>
-      <div class="card-face-divider"></div>
-      <p class="card-face-names">Jibin<br>&<br>Soumya</p>
-      <div class="card-face-divider"></div>
-      <p class="card-face-date">May 2026 · Angelvalley</p>
-    `;
+    front.innerHTML = `<div class="card-face-icon">💒</div><h3 class="card-face-title">Save the Date</h3><div class="card-face-divider"></div><p class="card-face-names">Jibin<br>&<br>Soumya</p><div class="card-face-divider"></div><p class="card-face-date">May 2026 · Angelvalley</p>`;
   };
   frontImg.src = 'assets/bride-and-groom/bride-and-groom-card-1.jpg';
 
   const backImg = new Image();
   backImg.onload = () => {
-    back.innerHTML = '';
     back.style.cssText = 'width:100%;height:100%;position:relative;';
     const img = document.createElement('img');
     img.src = 'assets/bride-and-groom/bride-and-groom-card-2.jpeg';
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:20px;';
+    img.loading = 'lazy';
+    img.decoding = 'async';
     const overlay = document.createElement('div');
     overlay.className = 'card-overlay';
     overlay.innerHTML = `<p class="card-overlay-text">Together Forever</p><p class="card-overlay-date">Wedding · May 16, 2026</p>`;
@@ -1765,25 +943,23 @@ function setupCards() {
   };
   backImg.onerror = () => {
     back.className = 'card-face-placeholder card-face-back-bg';
-    back.innerHTML = `
-      <div class="card-face-icon">💒</div>
-      <h3 class="card-face-title">Together Forever</h3>
-      <div class="card-face-divider"></div>
-      <p class="card-face-names">Wedding<br>16th May 2026</p>
-      <div class="card-face-divider"></div>
-      <p class="card-face-date">St Marys Church · Angelvalley</p>
-    `;
+    back.innerHTML = `<div class="card-face-icon">💒</div><h3 class="card-face-title">Together Forever</h3><div class="card-face-divider"></div><p class="card-face-names">Wedding<br>16th May 2026</p><div class="card-face-divider"></div><p class="card-face-date">St Marys Church · Angelvalley</p>`;
   };
   backImg.src = 'assets/bride-and-groom/bride-and-groom-card-2.jpeg';
 }
 setupCards();
 
-// ─── SCROLL-BASED CARD FLIP ───────────────────────────
+// ─── CARD FLIP ON SCROLL - debounced ───
 const mainCard = document.getElementById('mainCard');
 let cardFlipped = false;
-window.addEventListener('scroll', () => {
+let lastScrollY = -1;
+let scrollRaf = null;
+
+function handleCardFlip() {
   const heroH = document.getElementById('hero').offsetHeight;
   const scrollY = window.scrollY;
+  if (scrollY === lastScrollY) return;
+  lastScrollY = scrollY;
   const flipThreshold = heroH * 0.4;
   if (scrollY > flipThreshold && !cardFlipped) {
     mainCard.classList.add('flipped');
@@ -1792,44 +968,69 @@ window.addEventListener('scroll', () => {
     mainCard.classList.remove('flipped');
     cardFlipped = false;
   }
-});
+}
+
+window.addEventListener('scroll', () => {
+  if (scrollRaf) return;
+  scrollRaf = requestAnimationFrame(() => {
+    handleCardFlip();
+    updateNavDots();
+    scrollRaf = null;
+  });
+}, { passive: true });
 
 mainCard.addEventListener('click', () => {
   mainCard.classList.toggle('flipped');
   cardFlipped = mainCard.classList.contains('flipped');
 });
 
-// ─── PHOTO STACK GALLERY ─────────────────────────────
-const photoNames = [
-  'Moment One','Moment Two','Moment Three','Moment Four',
-  'Moment Five','Moment Six','Moment Seven','Moment Eight'
-];
+// ─── PHOTO STACK ───
+const photoNames = ['Moment One','Moment Two','Moment Three','Moment Four','Moment Five','Moment Six','Moment Seven','Moment Eight'];
 const scatterDesktop = [
-  { x: 6, y: 40, r: -8 },
-  { x: 38, y: 0, r: 6 },
-  { x: 67, y: 48, r: -5 },
-  { x: 4, y: 360, r: 7 },
-  { x: 33, y: 310, r: -3 },
-  { x: 64, y: 335, r: 8 },
-  { x: 19, y: 655, r: -7 },
-  { x: 52, y: 620, r: 5 }
+  { x: 6, y: 40, r: -8 },{ x: 38, y: 0, r: 6 },{ x: 67, y: 48, r: -5 },{ x: 4, y: 360, r: 7 },
+  { x: 33, y: 310, r: -3 },{ x: 64, y: 335, r: 8 },{ x: 19, y: 655, r: -7 },{ x: 52, y: 620, r: 5 }
 ];
 const scatterMobile = [
-  { x: 4, y: 20, r: -7 },
-  { x: 47, y: 40, r: 5 },
-  { x: 7, y: 250, r: 6 },
-  { x: 49, y: 280, r: -6 },
-  { x: 8, y: 510, r: -4 },
-  { x: 50, y: 550, r: 7 },
-  { x: 6, y: 760, r: -5 },
-  { x: 48, y: 790, r: 4 }
+  { x: 4, y: 20, r: -7 },{ x: 47, y: 40, r: 5 },{ x: 7, y: 250, r: 6 },{ x: 49, y: 280, r: -6 },
+  { x: 8, y: 510, r: -4 },{ x: 50, y: 550, r: 7 },{ x: 6, y: 760, r: -5 },{ x: 48, y: 790, r: 4 }
 ];
+
+const photoStack = document.getElementById('photoStack');
+
+// Build frames
+const stackFrag = document.createDocumentFragment();
+for (let i = 1; i <= 8; i++) {
+  const frame = document.createElement('div');
+  frame.className = 'photo-frame';
+  frame.dataset.index = String(i - 1);
+  frame.innerHTML = `<div class="photo-frame-inner"><div class="photo-img" id="photoImg${i}"><div class="photo-placeholder"><span class="photo-placeholder-icon">🌸</span><span class="photo-placeholder-text">${photoNames[i-1]}</span></div></div></div><p class="photo-caption">Jibin & Soumya</p>`;
+  stackFrag.appendChild(frame);
+}
+photoStack.appendChild(stackFrag);
+
+// Load images - exactly like original, no lazy on preload Image
+const stackFrames = Array.from(document.querySelectorAll('.photo-frame'));
+
+for (let i = 1; i <= 8; i++) {
+  const img = new Image();
+  const idx = i;
+  img.onload = () => {
+    const container = document.getElementById(`photoImg${idx}`);
+    if (container) {
+      container.innerHTML = `<img src="assets/bride-and-groom/bride-and-groom-${idx}.jpg" alt="Jibin & Soumya moment ${idx}">`;
+      // Update lightbox images list
+      if (lbImages[idx - 1] !== undefined) {
+        lbImages[idx - 1].src = `assets/bride-and-groom/bride-and-groom-${idx}.jpg`;
+      }
+    }
+  };
+  img.src = `assets/bride-and-groom/bride-and-groom-${i}.jpg`;
+}
 
 function applyScatterLayout() {
   const mobile = window.innerWidth <= 768;
   const map = mobile ? scatterMobile : scatterDesktop;
   const width = photoStack.clientWidth;
-
   stackFrames.forEach((frame, idx) => {
     const p = map[idx % map.length];
     frame.dataset.baseX = String((p.x / 100) * width);
@@ -1837,44 +1038,14 @@ function applyScatterLayout() {
     frame.dataset.baseR = String(p.r);
   });
 }
-
-const photoStack = document.getElementById('photoStack');
-for (let i = 1; i <= 8; i++) {
-  const frame = document.createElement('div');
-  frame.className = 'photo-frame';
-  frame.dataset.index = String(i - 1);
-  frame.innerHTML = `
-    <div class="photo-frame-inner">
-      <div class="photo-img" id="photoImg${i}">
-        <div class="photo-placeholder">
-          <span class="photo-placeholder-icon">🌸</span>
-          <span class="photo-placeholder-text">${photoNames[i-1]}</span>
-        </div>
-      </div>
-    </div>
-    <p class="photo-caption">Jibin & Soumya</p>
-  `;
-  photoStack.appendChild(frame);
-
-  const img = new Image();
-  img.onload = ((idx) => () => {
-    const container = document.getElementById(`photoImg${idx}`);
-    if (container) {
-      container.innerHTML = `<img src="assets/bride-and-groom/bride-and-groom-${idx}.jpg" alt="Jibin & Soumya moment ${idx}">`;
-    }
-  })(i);
-  img.src = `assets/bride-and-groom/bride-and-groom-${i}.jpg`;
-}
-
-const stackFrames = Array.from(document.querySelectorAll('.photo-frame'));
-const galleryStackSection = document.getElementById('gallery-stack');
 applyScatterLayout();
 
+// Gallery 3D scroll - throttled via RAF
+let galleryRaf = null;
 function updatePhotoStack3D() {
-  if (!photoStack || !stackFrames.length || !galleryStackSection) return;
+  if (!stackFrames.length) return;
   const viewportH = window.innerHeight;
   const activeZone = viewportH * 0.85;
-
   stackFrames.forEach((frame, idx) => {
     const cardRect = frame.getBoundingClientRect();
     const centerDelta = cardRect.top + cardRect.height / 2 - activeZone / 2;
@@ -1884,7 +1055,6 @@ function updatePhotoStack3D() {
     const baseX = Number(frame.dataset.baseX || 0);
     const baseY = Number(frame.dataset.baseY || 0);
     const baseR = Number(frame.dataset.baseR || 0);
-
     const x = baseX + normalized * 20 + side * (1 - strength) * 12;
     const y = baseY + (1 - strength) * 48;
     const z = -120 + strength * 130;
@@ -1893,83 +1063,97 @@ function updatePhotoStack3D() {
     const rotateZ = baseR + side * (4 - strength * 5);
     const scale = 0.84 + strength * 0.2;
     const opacity = 0.22 + strength * 0.78;
-
     frame.style.zIndex = String(100 + Math.round(strength * 80));
-    frame.style.opacity = String(opacity);
-    frame.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${scale})`;
+    frame.style.opacity = String(opacity.toFixed(2));
+    frame.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,${z.toFixed(1)}px) rotateX(${rotateX.toFixed(1)}deg) rotateY(${rotateY.toFixed(1)}deg) rotateZ(${rotateZ.toFixed(1)}deg) scale(${scale.toFixed(3)})`;
   });
 }
 
-// ─── COUNTDOWN TIMER ─────────────────────────────────
-const WEDDING_DATE = new Date('2026-05-16T10:30:00');
+window.addEventListener('scroll', () => {
+  if (galleryRaf) return;
+  galleryRaf = requestAnimationFrame(() => {
+    updatePhotoStack3D();
+    galleryRaf = null;
+  });
+}, { passive: true });
 
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    applyScatterLayout();
+    updatePhotoStack3D();
+  }, 150);
+});
+updatePhotoStack3D();
+
+// ─── COUNTDOWN - update only seconds field every second, full update every minute ───
+const WEDDING_DATE = new Date('2026-05-16T10:30:00');
 function pad(n) { return String(n).padStart(2, '0'); }
 
+let lastMin = -1;
 function updateCountdown() {
   const now = new Date();
   const diff = WEDDING_DATE - now;
   if (diff <= 0) {
-    document.getElementById('cd-days').textContent = '00';
-    document.getElementById('cd-hours').textContent = '00';
-    document.getElementById('cd-minutes').textContent = '00';
-    document.getElementById('cd-seconds').textContent = '00';
+    ['cd-days','cd-hours','cd-minutes','cd-seconds'].forEach(id => document.getElementById(id).textContent = '00');
     return;
   }
-  const days = Math.floor(diff / (1000*60*60*24));
-  const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-  const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
-  const seconds = Math.floor((diff % (1000*60)) / 1000);
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const minutes = Math.floor((diff % 3600000) / 60000);
+  const seconds = Math.floor((diff % 60000) / 1000);
 
-  document.getElementById('cd-days').textContent = pad(days);
-  document.getElementById('cd-hours').textContent = pad(hours);
-  document.getElementById('cd-minutes').textContent = pad(minutes);
   document.getElementById('cd-seconds').textContent = pad(seconds);
+
+  // Only update days/hours/minutes when minute changes
+  if (minutes !== lastMin) {
+    lastMin = minutes;
+    document.getElementById('cd-days').textContent = pad(days);
+    document.getElementById('cd-hours').textContent = pad(hours);
+    document.getElementById('cd-minutes').textContent = pad(minutes);
+  }
 }
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// ─── SCROLL REVEAL ────────────────────────────────────
-const revealElements = document.querySelectorAll('.reveal, .photo-frame, .timeline-item');
-const observer = new IntersectionObserver((entries) => {
+// ─── SCROLL REVEAL - single IntersectionObserver ───
+const revealEls = document.querySelectorAll('.reveal, .photo-frame, .timeline-item');
+const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target); // stop observing once revealed
     }
   });
 }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+revealEls.forEach(el => revealObserver.observe(el));
 
-revealElements.forEach(el => observer.observe(el));
-
-// ─── NAV ACTIVE STATE ─────────────────────────────────
+// ─── NAV ACTIVE STATE ───
 const sections = ['hero','invitation','countdown','gallery-stack','venue','timeline'];
 const navDots = document.querySelectorAll('.nav-dot');
-
-window.addEventListener('scroll', () => {
+function updateNavDots() {
   const scrollY = window.scrollY + window.innerHeight / 2;
-  sections.forEach((id, i) => {
-    const el = document.getElementById(id);
-    if (!el) return;
+  for (let i = 0; i < sections.length; i++) {
+    const el = document.getElementById(sections[i]);
+    if (!el) continue;
     if (scrollY >= el.offsetTop && scrollY < el.offsetTop + el.offsetHeight) {
       navDots.forEach(d => d.classList.remove('active'));
       if (navDots[i]) navDots[i].classList.add('active');
+      break;
     }
-  });
-});
-window.addEventListener('scroll', updatePhotoStack3D, { passive: true });
-window.addEventListener('resize', () => {
-  applyScatterLayout();
-  updatePhotoStack3D();
-});
-updatePhotoStack3D();
-
-function scrollToSection(id) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }
 }
 
-// ─── DOWNLOAD INVITATION ──────────────────────────────
+// Nav scroll - NO smooth scrolling
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView(); // instant, no smooth
+}
+
+// ─── DOWNLOAD ───
 function downloadInvitation(e) {
   e.preventDefault();
-
   const a = document.createElement('a');
   a.href = 'assets/invitation/save-the-date-card.png';
   a.download = 'Jibin-Soumya-Wedding-Invitation.png';
@@ -1978,25 +1162,15 @@ function downloadInvitation(e) {
   document.body.removeChild(a);
 }
 
-// ─── PARALLAX ────────────────────────────────────────
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  const heroBg = document.querySelectorAll('.hero-bg-circle');
-  heroBg.forEach((el, i) => {
-    el.style.transform = `translate(-50%, calc(-50% + ${scrollY * (0.1 + i * 0.05)}px))`;
-  });
-});
-
-// ─── LIGHTBOX ────────────────────────────────────────
+// ─── LIGHTBOX ───
 const lightbox = document.getElementById('lightbox');
 const lightboxContent = document.getElementById('lightboxContent');
 const lightboxCaption = document.getElementById('lightboxCaption');
 const lightboxCounter = document.getElementById('lightboxCounter');
 const lightboxDotsEl = document.getElementById('lightboxDots');
 let lbIndex = 0;
-let lbImages = []; // { src: string|null, label: string }
+let lbImages = photoNames.map(label => ({ src: null, label }));
 
-// Build dots
 function buildLbDots(count) {
   lightboxDotsEl.innerHTML = '';
   for (let i = 0; i < count; i++) {
@@ -2006,10 +1180,10 @@ function buildLbDots(count) {
     lightboxDotsEl.appendChild(d);
   }
 }
+buildLbDots(lbImages.length);
 
 function updateLbDots() {
-  const dots = lightboxDotsEl.querySelectorAll('.lightbox-dot');
-  dots.forEach((d, i) => d.classList.toggle('active', i === lbIndex));
+  lightboxDotsEl.querySelectorAll('.lightbox-dot').forEach((d,i) => d.classList.toggle('active', i === lbIndex));
 }
 
 function renderLbSlide(idx) {
@@ -2017,15 +1191,10 @@ function renderLbSlide(idx) {
   lightboxCounter.textContent = `${idx + 1}  /  ${lbImages.length}`;
   lightboxCaption.textContent = 'Jibin & Soumya';
   updateLbDots();
-
   if (item && item.src) {
-    lightboxContent.innerHTML = `<img class="lightbox-photo" src="${item.src}" alt="Jibin & Soumya photo ${idx+1}">`;
+    lightboxContent.innerHTML = `<img class="lightbox-photo" src="${item.src}" alt="Jibin & Soumya photo ${idx+1}" loading="lazy">`;
   } else {
-    lightboxContent.innerHTML = `
-      <div class="lightbox-placeholder">
-        <span class="lightbox-placeholder-icon">🌸</span>
-        <span class="lightbox-placeholder-text">${item ? item.label : 'Moment'}</span>
-      </div>`;
+    lightboxContent.innerHTML = `<div class="lightbox-placeholder"><span class="lightbox-placeholder-icon">🌸</span><span class="lightbox-placeholder-text">${item ? item.label : 'Moment'}</span></div>`;
   }
 }
 
@@ -2035,40 +1204,23 @@ function openLightbox(idx) {
   lightbox.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
 function closeLightbox() {
   lightbox.classList.remove('open');
   document.body.style.overflow = '';
 }
-
-function lbNext() {
-  lbIndex = (lbIndex + 1) % lbImages.length;
-  renderLbSlide(lbIndex);
-}
-
-function lbPrev() {
-  lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
-  renderLbSlide(lbIndex);
-}
+function lbNext() { lbIndex = (lbIndex + 1) % lbImages.length; renderLbSlide(lbIndex); }
+function lbPrev() { lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length; renderLbSlide(lbIndex); }
 
 document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
 document.getElementById('lightboxNext').addEventListener('click', lbNext);
 document.getElementById('lightboxPrev').addEventListener('click', lbPrev);
-
-// Close on overlay click (outside frame)
-lightbox.addEventListener('click', (e) => {
-  if (e.target === lightbox) closeLightbox();
-});
-
-// Keyboard
+lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
 document.addEventListener('keydown', (e) => {
   if (!lightbox.classList.contains('open')) return;
   if (e.key === 'Escape') closeLightbox();
   if (e.key === 'ArrowRight') lbNext();
   if (e.key === 'ArrowLeft') lbPrev();
 });
-
-// Touch swipe
 let lbTouchX = null;
 lightbox.addEventListener('touchstart', (e) => { lbTouchX = e.touches[0].clientX; }, { passive: true });
 lightbox.addEventListener('touchend', (e) => {
@@ -2078,40 +1230,11 @@ lightbox.addEventListener('touchend', (e) => {
   lbTouchX = null;
 });
 
-// Attach click handler to each photo frame after they are built
-// We hook into the existing photo stack generation by using event delegation
 document.getElementById('photoStack').addEventListener('click', (e) => {
   const frame = e.target.closest('.photo-frame');
   if (!frame) return;
-  const idx = parseInt(frame.dataset.index);
-  openLightbox(idx);
+  openLightbox(parseInt(frame.dataset.index));
 });
-
-// After photo stack JS runs, collect image sources into lbImages
-// Use a MutationObserver to detect when real images get swapped in
-function collectLbImages() {
-  lbImages = [];
-  for (let i = 1; i <= 8; i++) {
-    const container = document.getElementById(`photoImg${i}`);
-    const img = container ? container.querySelector('img') : null;
-    lbImages.push({
-      src: img ? img.src : null,
-      label: photoNames[i - 1]
-    });
-  }
-  buildLbDots(lbImages.length);
-}
-
-// Collect initially, then re-collect as images load
-setTimeout(collectLbImages, 100);
-
-// Observe photoStack for DOM changes (real images loading in)
-const lbObserver = new MutationObserver(() => {
-  collectLbImages();
-  // If lightbox is open, refresh current slide src in case it just loaded
-  if (lightbox.classList.contains('open')) renderLbSlide(lbIndex);
-});
-lbObserver.observe(document.getElementById('photoStack'), { subtree: true, childList: true, attributes: false });
 </script>
 </body>
 </html>
